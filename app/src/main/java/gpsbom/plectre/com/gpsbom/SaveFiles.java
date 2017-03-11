@@ -6,15 +6,16 @@ import android.util.Log;
 import android.widget.Toast;
 
 import java.io.File;
+import java.io.IOException;
 
 
 /**
  * Created by plectre on 09/03/17.
  */
 
-public class SaveFiles extends Activity{
+public class SaveFiles extends Activity {
     private String path;
-    private String DIR = "/GpsBom";
+    private String DIR = "/Gps Bom";
     private File dossier;
     private String data = "test écriture fichier";
 
@@ -23,7 +24,8 @@ public class SaveFiles extends Activity{
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
                 Log.e("la carte", "presente !");
                 path = Environment.getExternalStorageDirectory().getPath();
-                Log.e("Chemin", path);
+                Log.e("path..", path);
+
             // Appel method de création du dossier
                 createDir();
                 return;
@@ -41,7 +43,14 @@ public class SaveFiles extends Activity{
             dossier.mkdir();
             Log.e("Dossier créer","");
         } else {
-            Log.e("Le dossier existe déja","");
+            File fichier = new File (dossier+"/ track.txt");
+            try {
+                fichier.createNewFile();
+                Log.e("Fichier","TRACK.TXT");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            //Toast.makeText(getBaseContext(),"Le dossier existe déjà",Toast.LENGTH_SHORT);
         }
     }
 }

@@ -65,7 +65,7 @@ public class GpsService extends Service {
     @Override
     public void onCreate() {
         Toast.makeText(getBaseContext(),
-                "OnCreate ", Toast.LENGTH_LONG).show();
+                "Service démarré \"GPS\" ", Toast.LENGTH_LONG).show();
         locationMgr = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -83,7 +83,7 @@ public class GpsService extends Service {
     public void onDestroy() {
         super.onDestroy();
         Toast.makeText(getBaseContext(),
-                "Fin abonement \"GPS\" ", Toast.LENGTH_LONG).show();
+                "Fin de service \"GPS\" ", Toast.LENGTH_LONG).show();
         locationMgr.removeUpdates(onLocationChange);
     }
 
