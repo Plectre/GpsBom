@@ -12,9 +12,12 @@ public class MainActivity extends AppCompatActivity {
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void  onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        SaveFiles saveDirectory = new SaveFiles();
+        saveDirectory.testDeLaCarte();
 
         final Button btnOn = (Button) findViewById(R.id.gpsOn);
         final Button btnOff = (Button) findViewById(R.id.gpsOff);

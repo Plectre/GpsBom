@@ -23,6 +23,5 @@ public class SaveCoord extends BroadcastReceiver {
     }
     public void saveCoor(String lat, String lon) {
 
-
     }
 }
