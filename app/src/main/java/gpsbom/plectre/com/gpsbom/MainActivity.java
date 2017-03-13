@@ -3,10 +3,8 @@ package gpsbom.plectre.com.gpsbom;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -17,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         SaveFiles saveDirectory = new SaveFiles();
-        saveDirectory.testDeLaCarte();
+        saveDirectory.testCarteSd();
 
         final Button btnOn = (Button) findViewById(R.id.gpsOn);
         final Button btnOff = (Button) findViewById(R.id.gpsOff);
@@ -42,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+
 
     }
 }

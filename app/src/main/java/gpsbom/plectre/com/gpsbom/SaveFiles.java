@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.os.Environment;
 import android.util.Log;
 import android.widget.Toast;
-
 import java.io.File;
 import java.io.IOException;
 
@@ -17,14 +16,21 @@ public class SaveFiles extends Activity {
     private String path;
     private String DIR = "/Gps Bom";
     private File dossier;
+    private File fichier;
+    private String fichierName;
     private String data = "test écriture fichier";
 
-    public void testDeLaCarte() {
+    public String getFichierName() {
+        return fichierName;
+    }
+
+    public void testCarteSd() {
         // Test Si la carte est presente
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
                 Log.e("la carte", "presente !");
+            // On recupére le chemin du Dossier
                 path = Environment.getExternalStorageDirectory().getPath();
-                Log.e("path..", path);
+                //Log.e("path..", path);
 
             // Appel method de création du dossier
                 createDir();
@@ -38,19 +44,24 @@ public class SaveFiles extends Activity {
 
     // Création du Dossier GpsBom
     public void createDir() {
-        dossier = new File(path+DIR);
-        if(!dossier.exists()){
+        dossier = new File(path + DIR);
+        fichier = new File(dossier + "/track.txt");
+        if (!dossier.exists()) {
             dossier.mkdir();
-            Log.e("Dossier créer","");
-        } else {
-            File fichier = new File (dossier+"/ track.txt");
+            Log.e("Dossier créer", "");
+        }
+        if (!fichier.exists()) {
             try {
                 fichier.createNewFile();
-                Log.e("Fichier","TRACK.TXT");
+                Log.e("track", "Créer");
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            //Toast.makeText(getBaseContext(),"Le dossier existe déjà",Toast.LENGTH_SHORT);
         }
+            fichierName = fichier.getAbsolutePath();
+            Log.e(DIR, "Existe");
+            Log.e(fichierName, "existe");
+
+        //Toast.makeText(getBaseContext(),"Le dossier existe déjà",Toast.LENGTH_SHORT);
     }
 }

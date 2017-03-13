@@ -32,8 +32,8 @@ public class GpsService extends Service {
         public void onLocationChanged(Location location) {
             latitude = location.getLatitude();
             longitude = location.getLongitude();
-            /*Toast.makeText(getBaseContext(),
-                    "lat: " + latitude + " lon: " + longitude, Toast.LENGTH_SHORT).show();*/
+            Toast.makeText(getBaseContext(),
+                    "lat: " + latitude + " lon: " + longitude, Toast.LENGTH_SHORT).show();
 
             // Envoyer les donnée aux classe abonnées (SaveCoord.class) par l'intermediare
             // d'un Broadcast
@@ -48,7 +48,7 @@ public class GpsService extends Service {
 
         @Override
         public void onStatusChanged(String provider, int status, Bundle extras) {
-
+            Toast.makeText(getBaseContext(),"onStatusChanged",Toast.LENGTH_SHORT).show();
         }
 
         @Override
@@ -66,9 +66,13 @@ public class GpsService extends Service {
     public void onCreate() {
         Toast.makeText(getBaseContext(),
                 "Service démarré \"GPS\" ", Toast.LENGTH_LONG).show();
+        // Abonement au service GPs du device
         locationMgr = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
             return;
         }
         locationMgr.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0,
@@ -84,6 +88,7 @@ public class GpsService extends Service {
         super.onDestroy();
         Toast.makeText(getBaseContext(),
                 "Fin de service \"GPS\" ", Toast.LENGTH_LONG).show();
+        // On se desabonne du service GPs
         locationMgr.removeUpdates(onLocationChange);
     }
 
