@@ -13,30 +13,51 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
 
 /**
  * Created by plectre on 08/03/17.
+ * Classe Service se charge du GPS et envoie
+ * les positions au Broadcast reciever qui les enregistrent
+ * sur la mémoire Externe du device
  */
 
 public class GpsService extends Service {
 
     private LocationManager locationMgr = null;
-    //public String str_lat;
+    private Boolean firstCoorInbound = true;
     private double latitude;
     private double longitude;
+    private  String isCoordOK = "Position en cours d'aquisition !";
+
+    // Intent se chargeant d'envoyer à MainActivity
+    // le fait d'avoir recus les premiéres Coordonnées
+    private void intentStatusPosition() {
+        if (firstCoorInbound) {
+            isCoordOK = "Position aquise !";
+            Log.i("Appel", "Intent");
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.putExtra("txt_status_gps", isCoordOK);
+            startActivity(intent);
+        }
+            firstCoorInbound = false;
+    }
 
     private LocationListener onLocationChange = new LocationListener() {
         @Override
         public void onLocationChanged(Location location) {
+            // A la premiere aquisition de la position
+            // Appel de la méthode intentStatusPosition
+            if (firstCoorInbound) {
+                intentStatusPosition();
+            }
             latitude = location.getLatitude();
             longitude = location.getLongitude();
-            Toast.makeText(getBaseContext(),
-                    "lat: " + latitude + " lon: " + longitude, Toast.LENGTH_SHORT).show();
 
-            // Envoyer les donnée aux classe abonnées (SaveCoord.class) par l'intermediare
+            // Envoyer les donnée aux classe abonnées (BroadcastCoord.class) par l'intermediare
             // d'un Broadcast
+
             Intent intent = new Intent("broadcast_coor");
             String str_lat = String.valueOf(latitude);
             String str_lon = String.valueOf(longitude);
@@ -48,7 +69,7 @@ public class GpsService extends Service {
 
         @Override
         public void onStatusChanged(String provider, int status, Bundle extras) {
-            Toast.makeText(getBaseContext(),"onStatusChanged",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getBaseContext(),provider,Toast.LENGTH_SHORT).show();
         }
 
         @Override
@@ -64,6 +85,7 @@ public class GpsService extends Service {
 
     @Override
     public void onCreate() {
+        super.onCreate();
         Toast.makeText(getBaseContext(),
                 "Service démarré \"GPS\" ", Toast.LENGTH_LONG).show();
         // Abonement au service GPs du device
@@ -80,7 +102,7 @@ public class GpsService extends Service {
         locationMgr.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0,
                 0, onLocationChange);
 
-        super.onCreate();
+
     }
 
     @Override
@@ -88,13 +110,14 @@ public class GpsService extends Service {
         super.onDestroy();
         Toast.makeText(getBaseContext(),
                 "Fin de service \"GPS\" ", Toast.LENGTH_LONG).show();
+        Log.e("Appel fin service","GPS");
         // On se desabonne du service GPs
         locationMgr.removeUpdates(onLocationChange);
     }
 
     public int onStartCommand(Intent intent, int flags, int startId)
     {
-        Log.e("Appel Service","GPS");
+        Log.i("Appel Service","GPS");
         return super.onStartCommand(intent, flags, startId);
     }
 

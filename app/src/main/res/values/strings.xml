@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Gps Bom</string>
+    <string name="titreBox">Enregistrer</string>
+    <string name="nomTournee">Nom de la tournée</string>
+    <string name="coordonnes_en_cours_d_aquisitions">Coordonées en cours d\'aquisitions ...</string>
+    <string name="save">Test Save</string>
 </resources>

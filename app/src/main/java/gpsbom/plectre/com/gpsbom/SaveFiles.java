@@ -1,54 +1,56 @@
 package gpsbom.plectre.com.gpsbom;
 
-import android.app.Activity;
+import android.app.Service;
+import android.content.Intent;
 import android.os.Environment;
+import android.os.IBinder;
+import android.support.annotation.Nullable;
 import android.util.Log;
-import android.widget.Toast;
 import java.io.File;
 import java.io.IOException;
 
 
 /**
- * Created by plectre on 09/03/17.
+ * Created by plectre on 09/03/17
+ * Classe de Gestion de dossier
+ * E//storage/emulated/0/Gps Bom
  */
 
-public class SaveFiles extends Activity {
+public class SaveFiles {
+
     private String path;
     private String DIR = "/Gps Bom";
     private File dossier;
     private File fichier;
     private String fichierName;
-    private String data = "test écriture fichier";
 
-    public String getFichierName() {
-        return fichierName;
-    }
+    public String getDir() {return DIR;}
+    public String getFile(){return fichierName;}
 
-    public void testCarteSd() {
+    public void testCarteSd(String pName) {
         // Test Si la carte est presente
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-                Log.e("la carte", "presente !");
+                Log.i("la carte", "presente !");
             // On recupére le chemin du Dossier
                 path = Environment.getExternalStorageDirectory().getPath();
                 //Log.e("path..", path);
 
             // Appel method de création du dossier
-                createDir();
+                createDir(pName);
                 return;
         } else {
-            Toast.makeText(getBaseContext(),
-                    "Vérifier votre carte SD" ,Toast.LENGTH_SHORT).show();
+
             Log.e("Carte", "absente");
         }
     }
 
     // Création du Dossier GpsBom
-    public void createDir() {
+    public void createDir(String pName) {
         dossier = new File(path + DIR);
-        fichier = new File(dossier + "/track.txt");
+        fichier = new File(dossier + "/"+pName+".txt");
         if (!dossier.exists()) {
             dossier.mkdir();
-            Log.e("Dossier créer", "");
+            Log.i("Dossier créer", "");
         }
         if (!fichier.exists()) {
             try {
@@ -57,11 +59,13 @@ public class SaveFiles extends Activity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        } else {
+            Log.e(fichierName, "Existe déjà");
+            return;
         }
-            fichierName = fichier.getAbsolutePath();
+            fichierName = fichier.getPath();
             Log.e(DIR, "Existe");
             Log.e(fichierName, "existe");
 
-        //Toast.makeText(getBaseContext(),"Le dossier existe déjà",Toast.LENGTH_SHORT);
     }
 }
