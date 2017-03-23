@@ -30,13 +30,13 @@ public class GpsService extends Service {
     private double longitude;
     private  String isCoordOK = "Position en cours d'aquisition !";
 
-    // Intent se chargeant d'envoyer à MainActivity
+    // Intent se chargeant d'envoyer à LauncherActivity
     // le fait d'avoir recus les premiéres Coordonnées
     private void intentStatusPosition() {
         if (firstCoorInbound) {
             isCoordOK = "Position aquise !";
             Log.i("Appel", "Intent");
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(this, LauncherActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.putExtra("txt_status_gps", isCoordOK);
             startActivity(intent);
@@ -47,9 +47,11 @@ public class GpsService extends Service {
     private LocationListener onLocationChange = new LocationListener() {
         @Override
         public void onLocationChanged(Location location) {
+            Log.e("Location", "Change");
             // A la premiere aquisition de la position
             // Appel de la méthode intentStatusPosition
             if (firstCoorInbound) {
+                Log.e("Premiere", "Reception");
                 intentStatusPosition();
             }
             latitude = location.getLatitude();

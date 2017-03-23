@@ -18,32 +18,40 @@ import java.io.IOException;
 public class BroadcastCoord extends BroadcastReceiver {
     private String lat;
     private String lon;
-    private String DIR;
-    private String fichierName;
-    private String path = Environment.getExternalStorageDirectory().getPath();
+    private String fDossier;
+    private String fName;
+    private String path;
     private String NEW_LINE = System.lineSeparator();
 
 
+    public BroadcastCoord() {
+        getDirPath();
+    }
+
     // On recupere nom du dossier créer dans la classe SaveFile()
     public void getDirPath() {
-        SaveFiles sv = new SaveFiles();
-        this.DIR = sv.getDir();
-        this.fichierName = sv.getFile();
+        SaveFiles sf = new SaveFiles();
+        this.fDossier = sf.getFilePath();
+        this.fName = sf.getfName();
+        this.path = sf.getFilePath();
+
+        Log.i(path, "path");
+        Log.i(fName, "fName");
+
     }
+
 
     // Abonnement au Broadcast
     public void onReceive(Context context, Intent intent) {
+           // getDirPath();
 
-        // Récuperation des coorddonnées envoyé par GpsService
-        lat = intent.getStringExtra("lat");
-        lon = intent.getStringExtra("lon");
-        //Log.e("latitude", lat);
-        //Log.e("longitude", lon);
-        getDirPath();
+            // Récuperation des coorddonnées envoyé par GpsService
+            lat = intent.getStringExtra("lat");
+            lon = intent.getStringExtra("lon");
 
-        // Si le fichier est sauvegarder on enregistre les
-        // cocrdonnées
-        saveCoor(lat, lon);
+            // Si le fichier est sauvegarder on enregistre les
+            // cocrdonnées
+            saveCoor(lat, lon);
     }
 
     public void saveCoor(String lat, String lon) {
@@ -51,18 +59,18 @@ public class BroadcastCoord extends BroadcastReceiver {
         Log.i("Save latitude", lat);
         Log.i("Save longitude", lon);
 
-        File file = new File(path+DIR,fichierName+".txt");
+        File file = new File(path,fName);
             try {
                 FileWriter output = new FileWriter(file, true);
-                output.append(lat);;
+                output.append(lat);
                 output.write(" , ");
                 output.append(lon);
                 output.write(NEW_LINE);
 
-                Log.i("Enregistrement ","OK");
+                Log.i("Enregistrement Ok",String.valueOf(fName));
                 output.close();
             } catch (IOException ex){
-                Log.e("Enregistrement ",String.valueOf(ex));
+                Log.e("Enregistrement fail",String.valueOf(ex));
             }
     }
 }

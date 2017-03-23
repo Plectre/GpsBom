@@ -3,5 +3,5 @@
     <string name="titreBox">Enregistrer</string>
     <string name="nomTournee">Nom de la tournée</string>
     <string name="coordonnes_en_cours_d_aquisitions">Coordonées en cours d\'aquisitions ...</string>
-    <string name="save">Test Save</string>
+    <string name="save">Demarrer service</string>
 </resources>

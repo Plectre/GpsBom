@@ -1,10 +1,7 @@
 package gpsbom.plectre.com.gpsbom;
 
-import android.app.Service;
-import android.content.Intent;
+import android.content.Context;
 import android.os.Environment;
-import android.os.IBinder;
-import android.support.annotation.Nullable;
 import android.util.Log;
 import java.io.File;
 import java.io.IOException;
@@ -19,13 +16,18 @@ import java.io.IOException;
 public class SaveFiles {
 
     private String path;
-    private String DIR = "/Gps Bom";
-    private File dossier;
+    private static Boolean isCreate = false;
+    final String DIR = "/Gps Bom";
+    private File fFilePath;
     private File fichier;
-    private String fichierName;
+    private static String sFilePath;
+    private static String fName;
 
-    public String getDir() {return DIR;}
-    public String getFile(){return fichierName;}
+    public String getfName() {return fName;}
+    public String getFilePath() {return sFilePath;}
+
+
+    public Boolean getIsCreate() {return isCreate;}
 
     public void testCarteSd(String pName) {
         // Test Si la carte est presente
@@ -46,26 +48,32 @@ public class SaveFiles {
 
     // Création du Dossier GpsBom
     public void createDir(String pName) {
-        dossier = new File(path + DIR);
-        fichier = new File(dossier + "/"+pName+".txt");
-        if (!dossier.exists()) {
-            dossier.mkdir();
+        this.fName = pName;
+        this.fFilePath = new File(path + DIR);
+        this.sFilePath = String.valueOf(fFilePath);
+        fichier = new File(fFilePath + "/"+pName+".txt");
+        if (!fFilePath.exists()) {
+            fFilePath.mkdir();
             Log.i("Dossier créer", "");
         }
         if (!fichier.exists()) {
             try {
                 fichier.createNewFile();
-                Log.e("track", "Créer");
+                Log.e(pName, "Créer");
+                isCreate = true;
+                this.fName = pName+".txt";
+                //Log.e(fName, "fName");
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
         } else {
-            Log.e(fichierName, "Existe déjà");
+            Log.e(sFilePath, "Existe déjà");
             return;
         }
-            fichierName = fichier.getPath();
-            Log.e(DIR, "Existe");
-            Log.e(fichierName, "existe");
+            sFilePath = String.valueOf(fFilePath);
+            //Log.e(DIR, "Existe");
+            Log.e(String.valueOf(fFilePath), "fFilePath");
 
     }
 }

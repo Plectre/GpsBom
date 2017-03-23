@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 
 /**
@@ -27,12 +28,16 @@ import android.widget.EditText;
     public Dialog d;
     public Button save,cancel;
     public EditText edText;
+    public Boolean receptData = false;
+    private String fichierName;
+
+
 
     public SaveBox(Activity a) {
         super(a);
         this.c = a;
-
     }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,24 +50,42 @@ import android.widget.EditText;
         cancel.setOnClickListener(this);
 
     }
+
+    // gestion des boutons cliqués
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
+        switch(v.getId()) {
             case R.id.btn_saveFichierName:
-                String fichierName = String.valueOf(edText.getText());
+                // Test si le champs est rempli
+                if (edText.getText().toString().equals("")) {
+                    dialogIsEmpty();
+                } else {
+                    Log.e("edText :", "!= null");
+                    edTexSaveOK(v);
+                }
+                break;
+            case R.id.btn_cancel:
+                dismiss();
+                break;
+            default:
+                Log.e("Default", "Default");
+                break;
+        }
+    }
+
+    public void dialogIsEmpty() {
+        Toast.makeText(getContext(), "Remplir tous les champs", Toast.LENGTH_LONG).show();
+    }
+
+    // Methode céation fichier
+    public void edTexSaveOK(View v) {
+                fichierName = String.valueOf(edText.getText());
                 Log.e("SAVE", fichierName);
                 // Vérification des fichiers d'enregistrement
                 SaveFiles saveDirectory = new SaveFiles();
                 saveDirectory.testCarteSd(fichierName);
                 dismiss();
-                break;
-            case R.id.btn_cancel:
-                Log.e("cancel", "cancel");
-                dismiss();
-                break;
-            default:
-                Log.e("Default","default");
-                break;
+                receptData = true;
         }
+
     }
-}

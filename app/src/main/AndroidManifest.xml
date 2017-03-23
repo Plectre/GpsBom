@@ -9,12 +9,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <service android:name=".GpsService"/>
-        <activity android:name=".MainActivity">
+        <activity android:name=".LauncherActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".MainActivity"></activity>
         <receiver android:name=".BroadcastCoord">
             <intent-filter>
                 <action android:name="broadcast_coor"/>
