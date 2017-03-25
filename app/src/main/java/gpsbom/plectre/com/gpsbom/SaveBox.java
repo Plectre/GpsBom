@@ -60,7 +60,7 @@ import android.widget.Toast;
                 if (edText.getText().toString().equals("")) {
                     dialogIsEmpty();
                 } else {
-                    Log.e("edText :", "!= null");
+                    //Log.e("edText :", "!= null");
                     edTexSaveOK(v);
                 }
                 break;
@@ -74,13 +74,13 @@ import android.widget.Toast;
     }
 
     public void dialogIsEmpty() {
-        Toast.makeText(getContext(), "Remplir tous les champs", Toast.LENGTH_LONG).show();
+        Toast.makeText(getContext(), "Remplir tous les champs ...", Toast.LENGTH_LONG).show();
     }
 
     // Methode céation fichier
     public void edTexSaveOK(View v) {
                 fichierName = String.valueOf(edText.getText());
-                Log.e("SAVE", fichierName);
+                //Log.e("SAVE", fichierName);
                 // Vérification des fichiers d'enregistrement
                 SaveFiles saveDirectory = new SaveFiles();
                 saveDirectory.testCarteSd(fichierName);

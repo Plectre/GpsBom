@@ -28,7 +28,10 @@ public class GpsService extends Service {
     private Boolean firstCoorInbound = true;
     private double latitude;
     private double longitude;
-    private  String isCoordOK = "Position en cours d'aquisition !";
+    private  String isCoordOK = "Position en cours !";
+
+    public String getIscoorOk() {return isCoordOK;}
+
 
     // Intent se chargeant d'envoyer à LauncherActivity
     // le fait d'avoir recus les premiéres Coordonnées
@@ -66,7 +69,6 @@ public class GpsService extends Service {
             intent.putExtra("lat", str_lat);
             intent.putExtra("lon", str_lon);
             sendBroadcast(intent);
-
         }
 
         @Override
@@ -88,8 +90,9 @@ public class GpsService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        Toast.makeText(getBaseContext(),
-                "Service démarré \"GPS\" ", Toast.LENGTH_LONG).show();
+        //Toast.makeText(getBaseContext(),
+        //        "Service démarré \"GPS\" ", Toast.LENGTH_LONG).show();
+
         // Abonement au service GPs du device
         locationMgr = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
@@ -103,8 +106,6 @@ public class GpsService extends Service {
                 0, onLocationChange);
         locationMgr.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0,
                 0, onLocationChange);
-
-
     }
 
     @Override
@@ -113,7 +114,7 @@ public class GpsService extends Service {
         Toast.makeText(getBaseContext(),
                 "Fin de service \"GPS\" ", Toast.LENGTH_LONG).show();
         Log.e("Appel fin service","GPS");
-        // On se desabonne du service GPs
+        // On se desabonne du service GPS
         locationMgr.removeUpdates(onLocationChange);
     }
 
