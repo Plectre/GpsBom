@@ -9,30 +9,34 @@
     tools:layout_editor_absoluteX="0dp">
 
     <LinearLayout
-        android:padding="10dp"
+        android:gravity="center"
         android:layout_width="368dp"
         android:layout_height="495dp"
         android:orientation="vertical"
+        android:padding="50dp"
         tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="8dp">
+        tools:layout_editor_absoluteY="8dp"
+        android:weightSum="1">
 
 
         <TextView
-            android:id="@+id/txt_status_gps"
-            android:textSize="@dimen/titre"
+            android:id="@+id/txt_titre"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="0.46"
+            android:gravity="center"
             android:text="@string/app_name"
-            android:gravity="center"/>
+            android:textSize="@dimen/titre" />
 
         <Button
             android:id="@+id/btn_save"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:gravity="center"
             android:elevation="6dp"
+            android:gravity="center"
             android:text="@string/save"
+            android:layout_margin="20dp"
             tools:layout_editor_absoluteX="23dp"
             tools:layout_editor_absoluteY="-149dp" />
 
@@ -41,7 +45,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            app:srcCompat="@drawable/linux" />
+            app:srcCompat="@drawable/gps_on" />
+
+        <TextView
+            android:id="@+id/txt_gps_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_weight="0.46"
+            android:text="TextView" />
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

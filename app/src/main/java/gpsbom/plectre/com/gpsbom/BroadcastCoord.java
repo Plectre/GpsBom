@@ -18,7 +18,7 @@ import java.io.IOException;
 public class BroadcastCoord extends BroadcastReceiver {
     private String lat;
     private String lon;
-    private String fDossier;
+    private Boolean fileIsOk;
     private String fName;
     private String path;
     private String NEW_LINE = System.lineSeparator();
@@ -31,12 +31,13 @@ public class BroadcastCoord extends BroadcastReceiver {
     // On recupere nom du dossier créer dans la classe SaveFile()
     public void getDirPath() {
         SaveFiles sf = new SaveFiles();
-        this.fDossier = sf.getFilePath();
+        //this.fDossier = sf.getFilePath();
         this.fName = sf.getfName();
         this.path = sf.getFilePath();
+        this.fileIsOk = sf.getIsCreate();
 
-        Log.i(path, "path");
-        Log.i(fName, "fName");
+        //Log.i(path, "path");
+        //Log.i(fName, "fName");
 
     }
 
@@ -51,7 +52,10 @@ public class BroadcastCoord extends BroadcastReceiver {
 
             // Si le fichier est sauvegarder on enregistre les
             // cocrdonnées
+        if (fileIsOk) {
+            Log.i("Fil OK", String.valueOf(fileIsOk));
             saveCoor(lat, lon);
+        }
     }
 
     public void saveCoor(String lat, String lon) {
