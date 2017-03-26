@@ -18,7 +18,7 @@ import java.io.IOException;
 public class SaveFiles extends Activity{
 
     private String path;
-    private static Boolean isCreate = false;
+    public static Boolean isCreate = false;
     final String DIR = "/Gps Bom";
     private File fFilePath;
     private File fichier;
@@ -62,7 +62,9 @@ public class SaveFiles extends Activity{
                 fichier.createNewFile();
                 //Log.e(pName, "Créer");
                 this.fName = pName+".txt";
+                Log.e("isCreate SaveFile", String.valueOf(isCreate));
                 isCreate = true;
+                //GpsService gps = new GpsService();
                 Log.e("isCreate SaveFile", String.valueOf(isCreate));
 
             } catch (IOException e) {

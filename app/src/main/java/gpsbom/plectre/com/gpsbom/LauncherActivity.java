@@ -12,12 +12,13 @@ import android.widget.TextView;
 
 public class LauncherActivity extends AppCompatActivity {
 
-    public String status_coord;
+    public String status_coord = "";
     private String signal;
     private Boolean fileOk;
     private TextView txt_status_gps;
-    private Boolean fileCreate;
+    private Boolean fileCreate = false;
     private Button btnSave;
+    private Button btn_find_position;
 
 
     @Override
@@ -26,11 +27,13 @@ public class LauncherActivity extends AppCompatActivity {
         setContentView(R.layout.activity_launcher);
 
         btnSave = (Button) findViewById(R.id.btn_save);
+        btn_find_position = (Button) findViewById(R.id.btn_fin_position);
         final TextView txt_titre = (TextView) findViewById(R.id.txt_titre);
         txt_status_gps = (TextView) findViewById(R.id.txt_gps_status);
 
         txt_titre.setText(R.string.app_name);
         txt_status_gps.setText(status_coord);
+        btn_find_position.setVisibility(View.INVISIBLE);
 
 
         btnSave.setOnClickListener(new View.OnClickListener() {
@@ -39,7 +42,20 @@ public class LauncherActivity extends AppCompatActivity {
                 // appel de la boite de dialogue sauvgarde
                 SaveBox sBox = new SaveBox(LauncherActivity.this);
                 sBox.show();
+                btn_find_position.setVisibility(View.VISIBLE);
+            }
+        });
+
+        // Bouton demarrageService GPS
+        btn_find_position.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SaveFiles sf = new SaveFiles();
+                fileCreate = sf.getIsCreate();
                 btnSave.setEnabled(false);
+                if (!fileCreate) {return;} else {StartGps();}
+                txt_status_gps.setText("Posirtion en cours d'acquisition");
+                btnSave.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -47,14 +63,14 @@ public class LauncherActivity extends AppCompatActivity {
 
     @Override
     protected void onStart() {
-        Log.e("isCreate onStart", String.valueOf(fileCreate));
+        Log.e("Launcher onStart", String.valueOf(fileCreate));
         super.onStart();
-        SaveFiles sf = new SaveFiles();
-        fileCreate = sf.getIsCreate();
+
+
         Log.i("Launcher on start", String.valueOf(fileCreate));
-        if (!fileCreate) {return;} else {StartGps();}
+
         coordOk();
-        txt_status_gps.setText(status_coord);
+        //txt_status_gps.setText(status_coord);
     }
 
         public void StartGps() {
