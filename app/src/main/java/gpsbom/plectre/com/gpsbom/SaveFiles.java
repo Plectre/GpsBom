@@ -34,12 +34,12 @@ public class SaveFiles extends Activity{
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
                 //Log.i("la carte", "presente !");
             // On recupére le chemin du Dossier
-                path = Environment.getExternalStorageDirectory().getPath();
+               path = Environment.getExternalStorageDirectory().getPath();
                 //Log.e("path..", path);
 
             // Appel method de création du dossier
                 createDir(pName);
-            //
+            // 
                 return;
         } else {
 

@@ -16,7 +16,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity"></activity>
-        <receiver android:name=".BroadcastCoord">
+        <receiver android:name=".MyReciever">
             <intent-filter>
                 <action android:name="broadcast_coor"/>
             </intent-filter>

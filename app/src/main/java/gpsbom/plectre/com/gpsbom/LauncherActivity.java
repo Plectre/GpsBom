@@ -1,7 +1,4 @@
 package gpsbom.plectre.com.gpsbom;
-
-import android.content.Context;
-import android.content.Intent;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -54,7 +51,7 @@ public class LauncherActivity extends AppCompatActivity {
                 fileCreate = sf.getIsCreate();
                 btnSave.setEnabled(false);
                 if (!fileCreate) {return;} else {StartGps();}
-                txt_status_gps.setText("Posirtion en cours d'acquisition");
+                txt_status_gps.setText(R.string.status_gps);
                 btnSave.setVisibility(View.INVISIBLE);
             }
         });

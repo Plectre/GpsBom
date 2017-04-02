@@ -50,7 +50,7 @@ public class GpsService extends Service {
     private LocationListener onLocationChange = new LocationListener() {
         @Override
         public void onLocationChanged(Location location) {
-            Log.e("Location", "Change");
+            Log.i("Location", "Change");
             // A la premiere aquisition de la position
             // Appel de la méthode intentStatusPosition
             if (firstCoorInbound) {
@@ -60,7 +60,7 @@ public class GpsService extends Service {
             latitude = location.getLatitude();
             longitude = location.getLongitude();
 
-            // Envoyer les donnée aux classe abonnées (BroadcastCoord.class) par l'intermediare
+            // Envoyer les donnée aux classe abonnées (MyReciever.class) par l'intermediare
             // d'un Broadcast
 
             Intent intent = new Intent("broadcast_coor");
