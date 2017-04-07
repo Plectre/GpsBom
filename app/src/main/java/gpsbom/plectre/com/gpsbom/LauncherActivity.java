@@ -7,6 +7,12 @@ import android.view.View;
 import android.widget.Button;;
 import android.widget.TextView;
 
+/**
+ * Activitée Launcher
+ *  Instanciaion des Views et appel des méthodes de démarrage du GPS
+ *  Demarrage de l'activitée principale si le signal du GPS est acqui*/
+
+
 public class LauncherActivity extends AppCompatActivity {
 
     public String status_coord = "";
@@ -16,7 +22,6 @@ public class LauncherActivity extends AppCompatActivity {
     private Boolean fileCreate = false;
     private Button btnSave;
     private Button btn_find_position;
-
 
     @Override
     protected void  onCreate(Bundle savedInstanceState) {
@@ -40,6 +45,7 @@ public class LauncherActivity extends AppCompatActivity {
                 SaveBox sBox = new SaveBox(LauncherActivity.this);
                 sBox.show();
                 btn_find_position.setVisibility(View.VISIBLE);
+                btnSave.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -53,6 +59,7 @@ public class LauncherActivity extends AppCompatActivity {
                 if (!fileCreate) {return;} else {StartGps();}
                 txt_status_gps.setText(R.string.status_gps);
                 btnSave.setVisibility(View.INVISIBLE);
+                btn_find_position.setEnabled(false);
             }
         });
 
@@ -94,8 +101,9 @@ public class LauncherActivity extends AppCompatActivity {
         stopService(new Intent(LauncherActivity.this, GpsService.class));
     }
 
-    // Reception de l'intent de GpsService afin de savoir si
-    // la position est aquise
+    /** Reception de l'intent de GpsService afin de savoir si
+    ** la position est aquise */
+
     public String coordOk() {
         status_coord = "---------------";
         SaveFiles sf = new SaveFiles();
@@ -103,8 +111,9 @@ public class LauncherActivity extends AppCompatActivity {
         //fileOk = true;
         Log.e(String.valueOf(fileOk),"COOR DOK");
         Intent intent = getIntent();
-            // Si les coordonnées sont aquises et le fichier sauvgardé
-            // Démarrage de l'activitée principale
+            /** Si les coordonnées sont aquises et le fichier sauvgardé
+            // Démarrage de l'activitée principale */
+
             if (intent.getStringExtra("txt_status_gps") != null) {
                 status_coord= intent.getStringExtra("txt_status_gps");
                 Log.e(status_coord, "isatatus coord");

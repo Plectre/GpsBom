@@ -1,42 +1,90 @@
 package gpsbom.plectre.com.gpsbom;
 
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.CompoundButton;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import static android.R.attr.checked;
-import static android.R.attr.type;
 
 
 /**
  * Created by plectre on 20/03/17.
+ * Activitée principale
  */
 
 public class MainActivity extends AppCompatActivity {
 
 
-    public TextView txt_gps_status;
+    public TextView txt_status_gps;
+    public String gpsStatus = "Tracking en pause";
     public RadioButton hlp;
-    protected String typeCollectte;
+    public Button btn_rec;
+    public Button btn_stop;
+
+    public static boolean recIsOn = false;
+    protected String typeCollectte = "HLP";
+    protected ImageView img_sat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Cheked hlp par default
         hlp = (RadioButton) findViewById(R.id.radio_hlp);
+        img_sat = (ImageView) findViewById(R.id.img_satellite);
+        txt_status_gps = (TextView) findViewById(R.id.txt_satus_gps);
+        btn_rec = (Button) findViewById(R.id.btn_rec);
+        btn_stop = (Button) findViewById(R.id.btn_stop);
+        // Cheked hlp par default
         hlp.setChecked(true);
+        img_sat.setImageResource(R.drawable.gps_on);
+        txt_status_gps.setText(gpsStatus);
+
         onRadioGroupChange();
+
+        btn_rec.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // inverser recIsOn
+                recIsOn ^= true;
+
+                if (recIsOn == true)
+                {
+                    btn_rec.setText("PAUSE");
+                    Log.e(String.valueOf(recIsOn),"REC IS ON");
+                    gpsStatus = "Tracking en cours";
+                    img_sat.setImageResource(R.drawable.gps_on);
+
+                }
+                    else if (recIsOn == false)
+                {
+                    btn_rec.setText("REC");
+                    Log.e(String.valueOf(recIsOn),"REC IS OFF");
+                    gpsStatus = "Tracking en pause";
+                    img_sat.setImageResource(R.drawable.gps_off);
+                }
+                txt_status_gps.setText(gpsStatus);
+            }
+        });
+
+        btn_stop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // On stoppe l'enregistrement
+                recIsOn = false;
+                // On ferme le fichier kml en appelant le footer
+                stopTacking();
+                stopGpsService();
+            }
+        });
+
     }
 
     // Methode qui ecoute si on a un changement d'état du radioGroup
@@ -80,11 +128,23 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+    // Appel fonction d'enregistrement des coordonnées
+    public void typeCollectte(String pTypeCollecte) {
 
-   public void typeCollectte(String pTypeCollecte) {
-       Log.e("MainActivity 1 --> MyReceiver", pTypeCollecte);
-       SaveCoordinates sc = new SaveCoordinates();
-        sc.saveTypeCollectte(pTypeCollecte);
-       Log.e("MainActivity 2 --> MyReceiver", pTypeCollecte);
+       //Log.e("MainActivity 1 --> MyReceiver", pTypeCollecte);
+       KmlFactory kmlFactory = new KmlFactory();
+       kmlFactory.setKml(pTypeCollecte);
+   }
+    // Appel du footer kml
+   public void stopTacking() {
+       KmlFactory kmlFactory = new KmlFactory();
+       kmlFactory.footerKml();
+   }
+    // Fonction qui stoppe le service GPS
+   public void stopGpsService() {
+       stopService(new Intent(MainActivity.this, GpsService.class));
+       btn_stop.setEnabled(false);
+       img_sat.setImageResource(R.drawable.gps_off);
+
    }
 }

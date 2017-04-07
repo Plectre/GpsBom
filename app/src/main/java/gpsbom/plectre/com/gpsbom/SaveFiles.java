@@ -1,7 +1,6 @@
 package gpsbom.plectre.com.gpsbom;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Environment;
 import android.util.Log;
 
@@ -11,7 +10,8 @@ import java.io.IOException;
 
 /**
  * Created by plectre on 09/03/17
- * Classe de Gestion de dossier
+ * Classe de Gestion de dossier et
+ * du fichier
  * E//storage/emulated/0/Gps Bom
  */
 
@@ -52,7 +52,7 @@ public class SaveFiles extends Activity{
         this.fName = pName;
         this.fFilePath = new File(path + DIR);
         this.sFilePath = String.valueOf(fFilePath);
-        fichier = new File(fFilePath + "/"+pName+".txt");
+        fichier = new File(fFilePath + "/"+pName+".kml");
         if (!fFilePath.exists()) {
             fFilePath.mkdir();
             //Log.i("Dossier créer", "");
@@ -61,11 +61,16 @@ public class SaveFiles extends Activity{
             try {
                 fichier.createNewFile();
                 //Log.e(pName, "Créer");
-                this.fName = pName+".txt";
+                this.fName = pName+".kml";
                 Log.e("isCreate SaveFile", String.valueOf(isCreate));
                 isCreate = true;
                 //GpsService gps = new GpsService();
                 Log.e("isCreate SaveFile", String.valueOf(isCreate));
+
+                // instantciation de la classe kmlFactory et appel de la methode header
+                // qui sauvegarde l'entête du kml
+                KmlFactory kmlFactory = new KmlFactory();
+                kmlFactory.headerKml();
 
             } catch (IOException e) {
                 e.printStackTrace();

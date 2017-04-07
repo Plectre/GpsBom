@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="titre">25sp</dimen>
+    <dimen name="h1">20sp</dimen>
 
 </resources>

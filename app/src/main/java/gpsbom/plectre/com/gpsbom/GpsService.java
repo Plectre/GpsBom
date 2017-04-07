@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.location.LocationProvider;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
@@ -39,7 +40,7 @@ public class GpsService extends Service {
         if (firstCoorInbound) {
             isCoordOK = "Position aquise !";
             Log.i("Appel", "Intent");
-            Intent intent = new Intent(this, LauncherActivity.class);
+            Intent intent = new Intent(this, LauncherActivity.class);;
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.putExtra("txt_status_gps", isCoordOK);
             startActivity(intent);
@@ -73,7 +74,20 @@ public class GpsService extends Service {
 
         @Override
         public void onStatusChanged(String provider, int status, Bundle extras) {
-            Toast.makeText(getBaseContext(),provider,Toast.LENGTH_SHORT).show();
+            String newStatus = null;
+
+            switch (status) {
+                case LocationProvider.TEMPORARILY_UNAVAILABLE:
+                    newStatus = " Temporairement innactif";
+                    break;
+                case LocationProvider.AVAILABLE:
+                    newStatus = " en service";
+                    break;
+                case LocationProvider.OUT_OF_SERVICE:
+                    newStatus = " hors service";
+                    break;
+            }
+            Toast.makeText(getBaseContext(),provider + newStatus,Toast.LENGTH_SHORT).show();
         }
 
         @Override
@@ -83,7 +97,7 @@ public class GpsService extends Service {
 
         @Override
         public void onProviderDisabled(String provider) {
-            Toast.makeText(getBaseContext(),"Vérifier les settings",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getBaseContext(),"GPS innactif",Toast.LENGTH_SHORT).show();
         }
     };
 
