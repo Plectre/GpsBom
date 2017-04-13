@@ -20,13 +20,15 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
-
     public TextView txt_status_gps;
+    public static TextView txt_lat;
+    public static TextView txt_lon;
     public String gpsStatus = "Tracking en pause";
-    public RadioButton hlp;
     public Button btn_rec;
     public Button btn_stop;
-
+    public RadioGroup rd_group;
+    public String lat = "Latitude";
+    public String lon = "Longitude";
     public static boolean recIsOn = false;
     protected String typeCollectte = "HLP";
     protected ImageView img_sat;
@@ -36,18 +38,21 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        hlp = (RadioButton) findViewById(R.id.radio_hlp);
+        txt_lat = (TextView) findViewById(R.id.txt_latitude);
+        txt_lon = (TextView) findViewById(R.id.txt_longitude);
+        rd_group = (RadioGroup) findViewById(R.id.radio_group);
         img_sat = (ImageView) findViewById(R.id.img_satellite);
         txt_status_gps = (TextView) findViewById(R.id.txt_satus_gps);
         btn_rec = (Button) findViewById(R.id.btn_rec);
         btn_stop = (Button) findViewById(R.id.btn_stop);
-        // Cheked hlp par default
-        hlp.setChecked(true);
-        img_sat.setImageResource(R.drawable.gps_on);
+        img_sat.setImageResource(R.drawable.gps_off);
+
         txt_status_gps.setText(gpsStatus);
+        txt_lon.setText(lon);
+        txt_lat.setText(lat);
 
         onRadioGroupChange();
+
 
         btn_rec.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,8 +64,8 @@ public class MainActivity extends AppCompatActivity {
                 {
                     btn_rec.setText("PAUSE");
                     Log.e(String.valueOf(recIsOn),"REC IS ON");
-                    gpsStatus = "Tracking en cours";
                     img_sat.setImageResource(R.drawable.gps_on);
+                    gpsStatus = "Tracking en cours...";
 
                 }
                     else if (recIsOn == false)
@@ -80,17 +85,16 @@ public class MainActivity extends AppCompatActivity {
                 // On stoppe l'enregistrement
                 recIsOn = false;
                 // On ferme le fichier kml en appelant le footer
-                stopTacking();
+                stopTracking();
                 stopGpsService();
             }
         });
-
     }
 
     // Methode qui ecoute si on a un changement d'état du radioGroup
     protected void onRadioGroupChange() {
 
-        RadioGroup rd_group = (RadioGroup) findViewById(R.id.radio_group);
+        //RadioGroup rd_group = (RadioGroup) findViewById(R.id.radio_group);
         rd_group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
 
             @Override
@@ -136,7 +140,13 @@ public class MainActivity extends AppCompatActivity {
        kmlFactory.setKml(pTypeCollecte);
    }
     // Appel du footer kml
-   public void stopTacking() {
+   public void stopTracking() {
+       // une boucle sur les enfants du radioGroup et desactivation de
+       // tous
+       for (int i = 0; i< rd_group.getChildCount(); i++)
+       {
+           rd_group.getChildAt(i).setEnabled(false);
+       }
        KmlFactory kmlFactory = new KmlFactory();
        kmlFactory.footerKml();
    }
@@ -146,5 +156,11 @@ public class MainActivity extends AppCompatActivity {
        btn_stop.setEnabled(false);
        img_sat.setImageResource(R.drawable.gps_off);
 
+   }
+   public void setLat(String pLat, String pLon) {
+       lat = pLat;
+       lon = pLon;
+       txt_lat.setText(lat);
+       txt_lon.setText(lon);
    }
 }

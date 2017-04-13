@@ -3,6 +3,7 @@ package gpsbom.plectre.com.gpsbom;
 import android.app.Activity;
 import android.os.Environment;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.IOException;
@@ -31,7 +32,8 @@ public class SaveFiles extends Activity{
 
     public void testCarteSd(String pName) {
         // Test Si la carte est presente
-        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+        String directory = Environment.getExternalStorageState();
+        if (directory.equals(Environment.MEDIA_MOUNTED)) {
                 //Log.i("la carte", "presente !");
             // On recupére le chemin du Dossier
                path = Environment.getExternalStorageDirectory().getPath();
@@ -52,16 +54,17 @@ public class SaveFiles extends Activity{
         this.fName = pName;
         this.fFilePath = new File(path + DIR);
         this.sFilePath = String.valueOf(fFilePath);
-        fichier = new File(fFilePath + "/"+pName+".kml");
+
         if (!fFilePath.exists()) {
             fFilePath.mkdir();
             //Log.i("Dossier créer", "");
         }
+        fichier = new File(fFilePath + "/"+pName+".txt");
         if (!fichier.exists()) {
             try {
                 fichier.createNewFile();
                 //Log.e(pName, "Créer");
-                this.fName = pName+".kml";
+                this.fName = pName+".txt";
                 Log.e("isCreate SaveFile", String.valueOf(isCreate));
                 isCreate = true;
                 //GpsService gps = new GpsService();
@@ -74,6 +77,7 @@ public class SaveFiles extends Activity{
 
             } catch (IOException e) {
                 e.printStackTrace();
+
             }
         } else {
             //Log.e(sFilePath, "Existe déjà");

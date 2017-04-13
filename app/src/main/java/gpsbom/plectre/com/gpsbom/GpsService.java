@@ -23,7 +23,7 @@ import android.widget.Toast;
  * sur la mémoire Externe du device
  */
 
-public class GpsService extends Service {
+public class GpsService extends Service{
 
     private LocationManager locationMgr = null;
     private Boolean firstCoorInbound = true;
@@ -40,7 +40,7 @@ public class GpsService extends Service {
         if (firstCoorInbound) {
             isCoordOK = "Position aquise !";
             Log.i("Appel", "Intent");
-            Intent intent = new Intent(this, LauncherActivity.class);;
+            Intent intent = new Intent(this, LauncherActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.putExtra("txt_status_gps", isCoordOK);
             startActivity(intent);
@@ -61,14 +61,20 @@ public class GpsService extends Service {
             latitude = location.getLatitude();
             longitude = location.getLongitude();
 
-            // Envoyer les donnée aux classe abonnées (MyReciever.class) par l'intermediare
+            /** Envoyer les données aux classe abonnées (MyReciever.class) par l'intermediare
             // d'un Broadcast
+             * Envoyer les données avec un put StringExtra à l'activitée principale afin de renseigner les TextView
+             * txt_lat et txt_lon
+             */
 
             Intent intent = new Intent("broadcast_coor");
+
             String str_lat = String.valueOf(latitude);
             String str_lon = String.valueOf(longitude);
+
             intent.putExtra("lat", str_lat);
             intent.putExtra("lon", str_lon);
+
             sendBroadcast(intent);
         }
 
@@ -104,8 +110,6 @@ public class GpsService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        //Toast.makeText(getBaseContext(),
-        //        "Service démarré \"GPS\" ", Toast.LENGTH_LONG).show();
 
         // Abonement au service GPs du device
         locationMgr = (LocationManager) getSystemService(Context.LOCATION_SERVICE);

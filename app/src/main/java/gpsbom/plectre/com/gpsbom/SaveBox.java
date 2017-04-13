@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v4.app.FragmentActivity;
@@ -48,7 +49,6 @@ import android.widget.Toast;
         edText = (EditText) findViewById(R.id.etSave);
         save.setOnClickListener(this);
         cancel.setOnClickListener(this);
-
     }
 
     // gestion des boutons cliqués

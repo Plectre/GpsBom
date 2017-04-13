@@ -1,5 +1,6 @@
 package gpsbom.plectre.com.gpsbom;
 
+import android.app.Activity;
 import android.util.Log;
 
 import java.io.File;
@@ -11,7 +12,7 @@ import java.io.IOException;
  * Classe se chargeant de construire la syntaxe Kml
  */
 
-public class KmlFactory {
+public class KmlFactory extends Activity{
 
     private String fName;
     private String path;
@@ -55,8 +56,8 @@ public class KmlFactory {
                 + "<coordinates>";
         saveKml(kml);
     }
-    // Footer
 
+    // Footer
     public void footerKml() {
         String footer = "</coordinates>"
                         +"</LineString>"

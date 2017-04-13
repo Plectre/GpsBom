@@ -1,24 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
     <LinearLayout
+        android:layout_weight="0.33"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:orientation="horizontal">
 
+
         <TextView
-            android:id="@+id/txt_satus_gps"
-            android:layout_width="match_parent"
+            android:id="@+id/txt_latitude"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:textAlignment="center"
-            android:textSize="@dimen/h1"
-            android:text="BOM GPS"/>
+            android:layout_gravity="left"
+            android:layout_weight="0.5"
+            android:gravity="center" />
+
+        <TextView
+            android:id="@+id/txt_longitude"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            android:layout_weight="0.5"
+            android:gravity="center" />
+
     </LinearLayout>
 
     <RadioGroup
@@ -72,18 +82,28 @@
     </RadioGroup>
 
     <LinearLayout
-        android:padding="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="end"
+        android:layout_gravity="center_vertical"
         android:layout_weight="0.33"
+        android:orientation="vertical"
 
-        android:orientation="vertical">
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/txt_satus_gps"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="BOM GPS"
+            android:textAlignment="center"
+            android:textSize="@dimen/h1" />
 
         <ImageView
             android:id="@+id/img_satellite"
-            android:layout_width="141dp"
-            android:layout_height="133dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:background="@drawable/gps_off" />
     </LinearLayout>

@@ -4,11 +4,10 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
-import android.widget.Toast;
 
 /**
  * Created by plectre on 09/03/17.
- * Classe etendue de BroadcastReceiver qui récupére les position et
+ * Classe etendue de BroadcastReceiver qui récupére les positions et
  * appel de la class SaveCoordinates
  * qui se charge de les enregistrer sur
  * la mémoire Externe du device
@@ -21,6 +20,9 @@ public class MyReciever extends BroadcastReceiver {
     private String lon;
     private Boolean fileIsOk;
     private Boolean recIsOn;
+
+    public MyReciever() {}
+
 
     public void isFileOk() {
         SaveFiles sf = new SaveFiles();
@@ -41,23 +43,20 @@ public class MyReciever extends BroadcastReceiver {
                 lat = intent.getStringExtra("lat");
                 lon = intent.getStringExtra("lon");
 
+
                 // Si le fichier est sauvegarder on enregistre les
                 // cocrdonnées
                 if (fileIsOk) {
 
-                    Log.i("File OK", String.valueOf(fileIsOk));
+                    //Log.i("File OK", String.valueOf(fileIsOk));
                     SaveCoordinates sc = new SaveCoordinates();
                     sc.saveCoor(lon, lat);
-                    latLonDisplay(lon, lat);
 
+                    MainActivity mainActivity = new MainActivity();
+                    mainActivity.setLat(lat, lon);
                 }
             } else {
                 return;
             }
-    }
-    public void latLonDisplay (String lon, String lat) {
-
-        MainActivity ma = new MainActivity();
-        ma.gpsStatus = lon + " , " + lat;
     }
 }
