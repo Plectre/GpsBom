@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
     public TextView txt_status_gps;
     public static TextView txt_lat;
     public static TextView txt_lon;
-    public String gpsStatus = "Tracking en pause";
+    public String gpsStatus = "Ready to go !";
     public Button btn_rec;
     public Button btn_stop;
     public RadioGroup rd_group;
@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         btn_stop = (Button) findViewById(R.id.btn_stop);
         img_sat.setImageResource(R.drawable.gps_off);
 
-        txt_status_gps.setText(gpsStatus);
+        AfficheGpsStatus(gpsStatus);
         txt_lon.setText(lon);
         txt_lat.setText(lat);
 
@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
                     gpsStatus = "Tracking en pause";
                     img_sat.setImageResource(R.drawable.gps_off);
                 }
-                txt_status_gps.setText(gpsStatus);
+                AfficheGpsStatus(gpsStatus);
             }
         });
 
@@ -155,6 +155,9 @@ public class MainActivity extends AppCompatActivity {
        stopService(new Intent(MainActivity.this, GpsService.class));
        btn_stop.setEnabled(false);
        img_sat.setImageResource(R.drawable.gps_off);
+       btn_rec.setEnabled(false);
+       gpsStatus = "Fin du tracking !";
+       AfficheGpsStatus(gpsStatus);
 
    }
    public void setLat(String pLat, String pLon) {
@@ -162,5 +165,9 @@ public class MainActivity extends AppCompatActivity {
        lon = pLon;
        txt_lat.setText(lat);
        txt_lon.setText(lon);
+   }
+
+   public void AfficheGpsStatus(String pGpsStatus) {
+       txt_status_gps.setText(pGpsStatus);
    }
 }

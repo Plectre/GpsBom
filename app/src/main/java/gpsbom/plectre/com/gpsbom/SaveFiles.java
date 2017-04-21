@@ -59,18 +59,18 @@ public class SaveFiles extends Activity{
             fFilePath.mkdir();
             //Log.i("Dossier créer", "");
         }
-        fichier = new File(fFilePath + "/"+pName+".txt");
+        fichier = new File(fFilePath + "/"+pName+".kml");
         if (!fichier.exists()) {
             try {
                 fichier.createNewFile();
                 //Log.e(pName, "Créer");
-                this.fName = pName+".txt";
+                this.fName = pName+".kml";
                 Log.e("isCreate SaveFile", String.valueOf(isCreate));
                 isCreate = true;
                 //GpsService gps = new GpsService();
                 Log.e("isCreate SaveFile", String.valueOf(isCreate));
 
-                // instantciation de la classe kmlFactory et appel de la methode header
+                // instanciation de la classe kmlFactory et appel de la methode header
                 // qui sauvegarde l'entête du kml
                 KmlFactory kmlFactory = new KmlFactory();
                 kmlFactory.headerKml();

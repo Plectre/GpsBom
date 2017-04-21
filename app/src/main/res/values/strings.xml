@@ -1,11 +1,12 @@
 <resources>
-    <string name="app_name">Gps Bom</string>
+    <string name="app_name">Traker Bom</string>
     <string name="titreBox">Enregistrer</string>
     <string name="nomTournee">Nom de la tournée</string>
     <string name="coordonnes_en_cours_d_aquisitions">Coordonées en cours d\'aquisitions ...</string>
-    <string name="save">Demarrer service</string>
+    <string name="btn_save">SAUVGARDER</string>
     <string name="status_gps">Position en cours d\'acquisition</string>
     <string name="annuler">Annuler</string>
     <string name="demarrer_service">Demarrer Service</string>
-    <string name="recherche_position">Recherche position</string>
+    <string name="recherche_position">Synchroniser position</string>
+    <string name="btn_annuler">CANCEL</string>
 </resources>
