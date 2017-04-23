@@ -27,8 +27,8 @@ public class MainActivity extends AppCompatActivity {
     public Button btn_rec;
     public Button btn_stop;
     public RadioGroup rd_group;
-    public String lat = "Latitude";
-    public String lon = "Longitude";
+    public String lat = "--°.---";
+    public String lon = "--°.---";
     public static boolean recIsOn = false;
     protected String typeCollectte = "HLP";
     protected ImageView img_sat;
@@ -48,12 +48,11 @@ public class MainActivity extends AppCompatActivity {
         img_sat.setImageResource(R.drawable.gps_off);
 
         AfficheGpsStatus(gpsStatus);
-        txt_lon.setText(lon);
-        txt_lat.setText(lat);
+        setLat(lat, lon);
 
         onRadioGroupChange();
 
-
+        // Gestion ds boutons stop rec et pause
         btn_rec.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -163,8 +162,8 @@ public class MainActivity extends AppCompatActivity {
    public void setLat(String pLat, String pLon) {
        lat = pLat;
        lon = pLon;
-       txt_lat.setText(lat);
-       txt_lon.setText(lon);
+       txt_lon.setText("Lon: " + lon);
+       txt_lat.setText("Lat: " + lat);
    }
 
    public void AfficheGpsStatus(String pGpsStatus) {

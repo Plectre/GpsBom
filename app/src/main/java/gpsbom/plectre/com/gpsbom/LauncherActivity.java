@@ -1,10 +1,13 @@
 package gpsbom.plectre.com.gpsbom;
 import android.content.Intent;
+import android.graphics.drawable.TransitionDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.transition.Transition;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
@@ -14,7 +17,6 @@ import android.widget.TextView;
 
 
 public class LauncherActivity extends AppCompatActivity {
-
     public String status_coord = "";
     private String signal;
     private Boolean fileOk;

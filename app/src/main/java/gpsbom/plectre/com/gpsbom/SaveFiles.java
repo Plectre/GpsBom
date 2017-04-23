@@ -12,7 +12,7 @@ import java.io.IOException;
 /**
  * Created by plectre on 09/03/17
  * Classe de Gestion de dossier et
- * du fichier
+ * du fichier Appelé par SaveBox
  * E//storage/emulated/0/Gps Bom
  */
 
@@ -20,7 +20,7 @@ public class SaveFiles extends Activity{
 
     private String path;
     public static Boolean isCreate = false;
-    final String DIR = "/Gps Bom";
+    public  final String DIR = "/Traker Bom";
     private File fFilePath;
     private File fichier;
     private static String sFilePath;
