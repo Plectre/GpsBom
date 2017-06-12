@@ -23,7 +23,6 @@ public class MyReciever extends BroadcastReceiver {
 
     public MyReciever() {}
 
-
     public void isFileOk() {
         SaveFiles sf = new SaveFiles();
         this.fileIsOk = sf.getIsCreate();
@@ -32,7 +31,6 @@ public class MyReciever extends BroadcastReceiver {
     // Abonnement au Broadcast
     public void onReceive(Context context, Intent intent) {
             this.recIsOn = MainActivity.recIsOn;
-            Log.i(String.valueOf(recIsOn), "REC de My Reciever");
 
         // Si le bouton de MAinActivity en sur enregistrement
         // on ecrit les coordonnées sur le fichier
@@ -40,8 +38,9 @@ public class MyReciever extends BroadcastReceiver {
                 isFileOk();
 
                 // Récuperation des coordonnées envoyé par GpsService
-                lat = intent.getStringExtra("lat");
-                lon = intent.getStringExtra("lon");
+                this.lat = intent.getStringExtra("lat");
+                this.lon = intent.getStringExtra("lon");
+
 
 
                 // Si le fichier est sauvegarder on enregistre les

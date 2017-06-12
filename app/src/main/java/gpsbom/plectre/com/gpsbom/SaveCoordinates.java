@@ -1,6 +1,5 @@
 package gpsbom.plectre.com.gpsbom;
 
-import android.os.Bundle;
 import android.util.Log;
 import java.io.File;
 import java.io.FileWriter;
@@ -17,19 +16,29 @@ public class SaveCoordinates extends MainActivity{
     private String tCollecte; // type de collecte par defaut au demarrage
     private String path;
     private String NEW_LINE = System.lineSeparator();
+    public String saveLat;
+    private String saveLon;
     private boolean recIsOn;
 
+    public String getLat() {
+        return saveLat;
+    }
 
+    public String getLon() {
+        return saveLon;
+    }
 
     // On recupere nom du dossier créer dans la classe SaveFile()
     public void getDirPath() {
         SaveFiles sf = new SaveFiles();
-        //this.fDossier = sf.getFilePath();
         this.fName = sf.getfName();
         this.path = sf.getFilePath();
     }
 
     public void saveCoor(String pLat, String pLon) {
+
+        this.saveLat = pLat;
+        this.saveLon = pLon;
 
         // Appel de la fonction qui récupére le chemin et le nom du fichier
         getDirPath();
@@ -49,7 +58,7 @@ public class SaveCoordinates extends MainActivity{
             //Log.i("Enregistrement Ok", String.valueOf(fName));
             output.close();
         } catch (IOException ex) {
-            Log.e("Enregistrement fail", String.valueOf(ex));
+            //Log.e("Enregistrement fail", String.valueOf(ex));
         }
     }
 }

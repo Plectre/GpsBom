@@ -20,7 +20,8 @@
             android:layout_height="match_parent"
             android:layout_gravity="left"
             android:layout_weight="0.5"
-            android:gravity="center" />
+            android:gravity="center"
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/txt_longitude"
@@ -28,7 +29,8 @@
             android:layout_height="match_parent"
             android:layout_gravity="right"
             android:layout_weight="0.5"
-            android:gravity="center" />
+            android:gravity="center"
+            android:textSize="15sp" />
 
     </LinearLayout>
 
@@ -88,8 +90,13 @@
         android:layout_gravity="center_vertical"
         android:layout_weight="0.33"
         android:orientation="vertical"
-
         android:padding="10dp">
+
+        <TextView
+            android:id="@+id/txt_plot"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"/>
 
         <TextView
             android:id="@+id/txt_satus_gps"
@@ -100,7 +107,7 @@
             android:gravity="center"
             android:text="BOM GPS"
             android:textAlignment="center"
-            android:textSize="@dimen/h1"/>
+            android:textSize="@dimen/h1" />
 
         <ImageView
             android:id="@+id/img_satellite"
@@ -116,29 +123,29 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:orientation="horizontal"
         android:layout_weight="0.50"
+        android:orientation="horizontal"
 
         android:padding="@dimen/padding">
 
         <Button
             android:id="@+id/btn_stop"
-            android:layout_margin="2dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
+            android:layout_margin="2dp"
             android:layout_weight="0.33"
             android:background="@color/colorButton"
             android:text="Stop" />
 
         <Button
             android:id="@+id/btn_rec"
-            android:layout_margin="2dp"
-            android:background="@color/colorButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
+            android:layout_margin="2dp"
             android:layout_weight="0.33"
+            android:background="@color/colorButton"
             android:text="Rec" />
 
     </LinearLayout>

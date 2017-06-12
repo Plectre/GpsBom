@@ -45,10 +45,12 @@
             android:layout_width="200dp"
             android:layout_height="200dp"
             android:layout_gravity="center"
-            android:scaleType="centerInside"
             android:layout_margin="@dimen/margin"
+            android:contentDescription="img_satt"
             android:padding="@dimen/padding"
-            app:srcCompat="@drawable/gps_off" />
+            android:scaleType="centerInside"
+            app:srcCompat="@drawable/gps_off"
+            tools:ignore="HardcodedText" />
 
         <TextView
             android:id="@+id/txt_gps_status"
@@ -69,7 +71,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="right"
-                android:text="@string/recherche_position" />
+                android:text="@string/recherche_position"
+                tools:ignore="RtlHardcoded" />
 
         </LinearLayout>
     </LinearLayout>

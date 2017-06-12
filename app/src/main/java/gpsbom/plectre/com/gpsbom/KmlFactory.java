@@ -19,24 +19,31 @@ public class KmlFactory extends Activity{
     private String NEW_LINE = System.lineSeparator();
     private String kml;
 
+
     // Header kml
     public void headerKml() {
         getDirPath();
-        String header = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
-                        + "<kml xmlns:kml=\"http://www.opengis.net/kml/2.2\">"
-                        + "<Document>"
-                        + "<name>" + fName + "</name>"
-                        + "<Placemark>"
-                            + "<name>--</name>"
-                            + "<styleUrl></styleUrl>"
-                            + "<LineString>"
-                            + "<tesselate>1</tesselate>"
+        // "<kml xmlns:kml=\"http://www.opengis.net/kml/2.2\">"
+        String header = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + NEW_LINE
+                        + "<kml xmlns=\"http://www.opengis.net/kml/2.2\">" + NEW_LINE
+                        + "<Document>" + NEW_LINE
+                        + "<name>" + fName + "</name>" + NEW_LINE
+                        + "<Placemark>" + NEW_LINE
+                            + "<name>debut</name>" + NEW_LINE
+                            + "<styleUrl></styleUrl>" + NEW_LINE
+                            + "<LineString>" + NEW_LINE
+                            + "<tesselate>1</tesselate>" + NEW_LINE
+                            + "<altitudeMode>clampToGround</altitudeMode>" + NEW_LINE
                             + "<coordinates>";
         saveKml(header);
     }
 
     // Body kml
-    public void setKml(String typeCollectte) {
+    public void setKml(String typeCollecte, String lat, String lon) {
+        // Recuperation des coordonnées afin d'eviter les
+        // /coupures du circuit lors du changement de type de collecte
+
+
         kml = "</coordinates>"
                 + NEW_LINE +
                 "</LineString>"
@@ -45,7 +52,7 @@ public class KmlFactory extends Activity{
                 + NEW_LINE
                 + "<Placemark>"
                 + NEW_LINE
-                + "<name>" + typeCollectte +  "</name>"
+                + "<name>" + typeCollecte +  "</name>"
                 + NEW_LINE +
                 "<styleUrl>" + "</styleUrl>"
                 + NEW_LINE +
@@ -53,8 +60,11 @@ public class KmlFactory extends Activity{
                 + NEW_LINE +
                 "<tesselate>1</tesselate>"
                 + NEW_LINE
-                + "<coordinates>";
+                + "<coordinates>"
+                + NEW_LINE
+                + lon+","+lat;
         saveKml(kml);
+        Log.i("KML_Factory", lon +"," + lat);
     }
 
     // Footer
