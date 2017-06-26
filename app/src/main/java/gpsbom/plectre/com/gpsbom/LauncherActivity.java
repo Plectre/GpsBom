@@ -1,5 +1,6 @@
 package gpsbom.plectre.com.gpsbom;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.drawable.TransitionDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,7 +9,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;;
 import android.widget.ImageView;
+import android.widget.SeekBar;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 /**
  * Activitée Launcher
@@ -21,24 +25,78 @@ public class LauncherActivity extends AppCompatActivity {
     private String signal;
     private Boolean fileOk;
     private TextView txt_status_gps;
+    private TextView txt_location;
+    private TextView txt_time;
     private Boolean fileCreate = false;
     private Button btnSave;
     private Button btn_find_position;
+    private SeekBar sb_location;
+    private SeekBar sb_time;
+
+    private long updateTime;
+    private float updateLocation;
 
     @Override
     protected void  onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launcher);
+        // Vérouillage de la vue en position portrait
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         btnSave = (Button) findViewById(R.id.btn_save);
         btn_find_position = (Button) findViewById(R.id.btn_fin_position);
         final TextView txt_titre = (TextView) findViewById(R.id.txt_titre);
         txt_status_gps = (TextView) findViewById(R.id.txt_gps_status);
+        txt_location = (TextView) findViewById(R.id.txt_location);
+        txt_time = (TextView) findViewById(R.id.txt_time);
+        sb_location = (SeekBar) findViewById(R.id.sb_location);
+        sb_time = (SeekBar)findViewById(R.id.sb_time);
 
         txt_titre.setText(R.string.app_name);
         txt_status_gps.setText(status_coord);
         btn_find_position.setVisibility(View.INVISIBLE);
 
+
+        // Manipulation de la seekBar location
+        sb_location.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                updateLocation = (float)progress;
+                txt_location.setText(String.valueOf(progress));
+            }
+
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+        // Manipulation SeekBar time
+        sb_time.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                // Pas de 0.5 soit 1/2 seconde
+                updateTime = (long)progress * 500;
+                float prog = (float)progress/2;
+                txt_time.setText(String.valueOf(prog));
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
 
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,6 +120,8 @@ public class LauncherActivity extends AppCompatActivity {
                 txt_status_gps.setText(R.string.status_gps);
                 btnSave.setVisibility(View.INVISIBLE);
                 btn_find_position.setEnabled(false);
+                sb_time.setEnabled(false);
+                sb_location.setEnabled(false);
             }
         });
 
@@ -80,13 +140,21 @@ public class LauncherActivity extends AppCompatActivity {
     }
 
         public void StartGps() {
-        // Demarrage du service GPS
-
+        /**
+         *  Demarrage du service GPS et passage des valeurs de la SeekBar vers
+         *  update_time et update_location
+         */
                 Log.e("Launcher iscreate,String",String.valueOf(fileCreate));
-                startService(new Intent(LauncherActivity.this, GpsService.class));
-                Log.i("demarrage", "Gps service");
                 GpsService gpsService = new GpsService();
                 signal = gpsService.getIscoorOk();
+                Intent intent = new Intent(this, GpsService.class);
+                intent.putExtra("update_time", updateTime);
+                intent.putExtra("update_location", updateLocation);
+
+                startService(intent);
+                //startService(servicenew Intent(LauncherActivity.this, GpsService.class));
+
+
 
     }
 

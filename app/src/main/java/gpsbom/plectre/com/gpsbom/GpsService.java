@@ -30,9 +30,9 @@ public class GpsService extends Service {
     private double latitude;
     private double longitude;
     private String isCoordOK = "Position en cours !";
-    private long TIME_UPDATE_GPS = 2000; // Delta entre chaque enregistrement de point en millisecondes
-                                        // ou
-    private float LOCATION_UPDATE_GPS = 5; // Delta entre chaque enregistrement de point en Métres
+//    private long time_update_gps = 0; // Delta entre chaque enregistrement de coord en millisecondes
+//    // ou
+//    private float location_update_gps = 0; // Delta entre chaque enregistrement de coord en Métres
 
     public String getIscoorOk() {
         return isCoordOK;
@@ -48,7 +48,7 @@ public class GpsService extends Service {
             Log.i("Appel", "Intent");
             Intent intent = new Intent(this, MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//            intent.putExtra("txt_status_gps", isCoordOK);
+
             intent.putExtra("lati", String.valueOf(latitude));
             intent.putExtra("longi", String.valueOf(longitude));
             startActivity(intent);
@@ -71,7 +71,7 @@ public class GpsService extends Service {
 
 
             /** Envoyer les données aux classe abonnées (MyReciever.class) par l'intermediare
-             // d'un Broadcast
+             *   d'un Broadcast
              * Envoyer les données avec un put StringExtra à l'activitée principale afin de renseigner les TextView
              * txt_lat et txt_lon
              */
@@ -119,23 +119,7 @@ public class GpsService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-
-        // Abonement au service GPs du device
-        locationMgr = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        // gestion de la permission utilisateur
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
-
-        // requestLocationMananger(String PROVIDER, long minTime "miliseconds", float minDistance "metre", listener)
-//
-//        locationMgr.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0,
-//                0, onLocationChange);
-        locationMgr.requestLocationUpdates(LocationManager.GPS_PROVIDER, TIME_UPDATE_GPS,
-                LOCATION_UPDATE_GPS, onLocationChange);
+        Log.i("demarrage", "onCreate()");
     }
 
     @Override
@@ -149,10 +133,14 @@ public class GpsService extends Service {
     }
 
     public int onStartCommand(Intent intent, int flags, int startId) {
-        
-        Log.i("Appel Service", String.valueOf(TIME_UPDATE_GPS));
+        // Récupération des données envoyées par launcherActivity
+        long time_update_gps = intent.getLongExtra("update_time", 1500);
+        float location_update_gps = intent.getFloatExtra("update_location", 3);
+        Log.i("time update", String.valueOf(time_update_gps));
+        Log.i("location update", String.valueOf(location_update_gps));
+        // Appel abonement gps
+        abonementGps(time_update_gps, location_update_gps);
         return super.onStartCommand(intent, flags, startId);
-
     }
 
     @Nullable
@@ -160,4 +148,23 @@ public class GpsService extends Service {
     public IBinder onBind(Intent intent) {
         return null;
     }
+
+    public void abonementGps(long time, float location) {
+        locationMgr = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        // gestion de la permission utilisateur
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            return;
+
+
+        }
+
+        Log.i("APP", "Time update " + time);
+
+        locationMgr.requestLocationUpdates(LocationManager.GPS_PROVIDER, time,
+                location, onLocationChange);
+    }
 }
+
