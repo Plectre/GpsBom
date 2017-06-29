@@ -20,7 +20,7 @@ import static android.R.color.black;
 
 
 /**
- * Created by plectre on 20/03/17.
+ * Created by Thierry ALVAREZ "Plectre" on 20/03/17.
  * Activitée principale
  */
 
@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
     public TextView txt_status_gps;
     private TextView txt_typeDeCollecte;
-    public  static TextView txt_lat;
+    public static TextView txt_lat;
     public static TextView txt_lon;
     public static TextView txt_plot;
     public String gpsStatus = "GAZZZzzzzzz !!!!";
@@ -68,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Gestion des boutons stop rec et pause
         btn_rec.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 enregistrementPositions();
@@ -83,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
                 // On ferme le fichier kml en appelant le footer
                 stopTracking();
                 stopGpsService();
+                finish();
             }
         });
 
@@ -104,6 +106,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
+
                 switch (checkedId) {
 
                     case R.id.radio_biLat:
@@ -140,76 +143,79 @@ public class MainActivity extends AppCompatActivity {
                         break;
                 }
             }
+
         });
     }
+
     // Appel fonction d'enregistrement des coordonnées
     public void typeCollectte(String pTypeCollecte, String lat, String lon) {
 
-       KmlFactory kmlFactory = new KmlFactory();
-       kmlFactory.setKml(pTypeCollecte, lat, lon);
-   }
+        KmlFactory kmlFactory = new KmlFactory();
+        kmlFactory.setKml(pTypeCollecte, lat, lon);
+    }
+
     // Appel du footer kml
-   public void stopTracking() {
-       // une boucle sur les enfants du radioGroup et desactivation de
-       // tous
-       for (int i = 0; i< rd_group.getChildCount(); i++)
-       {
-           rd_group.getChildAt(i).setEnabled(false);
-       }
-       KmlFactory kmlFactory = new KmlFactory();
-       kmlFactory.footerKml();
-   }
+    public void stopTracking() {
+        // une boucle sur les enfants du radioGroup et desactivation de
+        // tous
+        for (int i = 0; i < rd_group.getChildCount(); i++) {
+            rd_group.getChildAt(i).setEnabled(false);
+        }
+
+        // Sauvegarde du footer kmlFactory
+        KmlFactory kmlFactory = new KmlFactory();
+        kmlFactory.footerKml(lat, lon);
+    }
+
     // Fonction qui stoppe le service GPS
-   public void stopGpsService() {
-       stopService(new Intent(MainActivity.this, GpsService.class));
-       btn_stop.setEnabled(false);
+    public void stopGpsService() {
+        stopService(new Intent(MainActivity.this, GpsService.class));
+        btn_stop.setEnabled(false);
+        btn_rec.setEnabled(false);
+        gpsStatus = "!... Fin du tracking ...!";
+        AfficheGpsStatus(gpsStatus);
+        txt_plot.setText("");
 
-       btn_rec.setEnabled(false);
-       gpsStatus = "!... Fin du tracking ...!";
-       AfficheGpsStatus(gpsStatus);
-       //img_sat.clearAnimation();
-       txt_plot.setText("");
+    }
 
-   }
-   public void setLat(String pLat, String pLon) {
-       this.lat = pLat;
-       this.lon = pLon;
+    public void setLat(String pLat, String pLon) {
+        this.lat = pLat;
+        this.lon = pLon;
 
-       txt_lon.setText(lon);
-       txt_lat.setText(lat);
-       txt_plot.setText("! ... Recording ... !");
-   }
-   public void AfficheGpsStatus(String pGpsStatus) {
-       txt_status_gps.setText(pGpsStatus);
+        txt_lon.setText(lon);
+        txt_lat.setText(lat);
+        txt_plot.setText("! ... Recording ... !");
+    }
 
-   }
+    public void AfficheGpsStatus(String pGpsStatus) {
+        txt_status_gps.setText(pGpsStatus);
 
-   // Methode Appelée à l'appui sur le bouton enregistrement
-   public void enregistrementPositions() {
-       // inverser recIsOn
-       recIsOn ^= true;
+    }
 
-       if (recIsOn)
-       {
-           btn_rec.setText("PAUSE");
-           Log.e(String.valueOf(recIsOn),"REC IS ON");
-           //img_sat.clearAnimation();
-           gpsStatus = "!... Tracking en cours ...!";
-           txt_typeDeCollecte.clearAnimation();
+    // Methode Appelée au click sur le bouton enregistrement
+    public void enregistrementPositions() {
+        // inverser recIsOn
+        recIsOn ^= true;
+
+        if (recIsOn) {
+            btn_rec.setText("PAUSE");
+            Log.e(String.valueOf(recIsOn), "REC IS ON");
+            //img_sat.clearAnimation();
+            gpsStatus = "!... Tracking en cours ...!";
+            txt_typeDeCollecte.clearAnimation();
 
 
-       }
-       else
-       {
-           btn_rec.setText("REC");
-           Log.e(String.valueOf(recIsOn),"REC IS OFF");
-           gpsStatus = "!... Tracking en pause ...!";
-           txt_plot.setText("");
-           txt_typeDeCollecte.startAnimation(fadeAnim);
-       }
-   }
-   public void affichageTypeCollecte(String typeCollecte) {
-       txt_typeDeCollecte.setTextColor(Color.rgb(0,0,0));
-       txt_typeDeCollecte.setText(typeCollecte);
-   }
+        } else {
+            btn_rec.setText("REC");
+            Log.e(String.valueOf(recIsOn), "REC IS OFF");
+            gpsStatus = "!... Tracking en pause ...!";
+            txt_plot.setText("");
+            txt_typeDeCollecte.startAnimation(fadeAnim);
+        }
+    }
+
+    public void affichageTypeCollecte(String typeCollecte) {
+        txt_typeDeCollecte.setTextColor(Color.rgb(0, 0, 0));
+        txt_typeDeCollecte.setText(typeCollecte);
+    }
 }

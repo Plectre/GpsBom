@@ -72,8 +72,8 @@ public class SaveFiles extends Activity{
 
                 // instanciation de la classe kmlFactory et appel de la methode header
                 // qui sauvegarde l'entête du kml
-                KmlFactory kmlFactory = new KmlFactory();
-                kmlFactory.headerKml();
+                //KmlFactory kmlFactory = new KmlFactory();
+                //kmlFactory.headerKml();
 
             } catch (IOException e) {
                 e.printStackTrace();

@@ -23,15 +23,14 @@ import android.widget.Toast;
  */
 
 
-    public class SaveBox extends Dialog implements android.view.View.OnClickListener {
+public class SaveBox extends Dialog implements android.view.View.OnClickListener {
 
     public Activity c;
     public Dialog d;
-    public Button save,cancel;
+    public Button save, cancel;
     public EditText edText;
     public Boolean receptData = false;
     private String fichierName;
-
 
 
     public SaveBox(Activity a) {
@@ -54,7 +53,7 @@ import android.widget.Toast;
     // gestion des boutons cliqués
     @Override
     public void onClick(View v) {
-        switch(v.getId()) {
+        switch (v.getId()) {
             case R.id.btn_saveFichierName:
                 // Test si le champs est rempli
                 if (edText.getText().toString().equals("")) {
@@ -79,13 +78,13 @@ import android.widget.Toast;
 
     // Methode céation fichier
     public void edTexSaveOK(View v) {
-                fichierName = String.valueOf(edText.getText());
-                //Log.e("SAVE", fichierName);
-                // Vérification des fichiers d'enregistrement
-                SaveFiles saveDirectory = new SaveFiles();
-                saveDirectory.testCarteSd(fichierName);
-                dismiss();
-                receptData = true;
-        }
-
+        fichierName = String.valueOf(edText.getText());
+        //Log.e("SAVE", fichierName);
+        // Vérification des fichiers d'enregistrement
+        SaveFiles saveDirectory = new SaveFiles();
+        saveDirectory.testCarteSd(fichierName);
+        dismiss();
+        receptData = true;
     }
+
+}

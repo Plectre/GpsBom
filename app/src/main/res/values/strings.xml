@@ -17,6 +17,6 @@
     <string name="tirets">--</string>
     <string name="stop">Stop</string>
     <string name="record">Rec</string>
-    <string name="delta_metre">Delta mètre(s)</string>
-    <string name="delta_seconde">Delta seconde(s)</string>
+    <string name="delta_metre">Distance métre</string>
+    <string name="delta_seconde">Temps seconde</string>
 </resources>

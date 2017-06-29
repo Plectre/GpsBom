@@ -21,7 +21,8 @@ public class MyReciever extends BroadcastReceiver {
     private Boolean fileIsOk;
     private Boolean recIsOn;
 
-    public MyReciever() {}
+    public MyReciever() {
+    }
 
     public void isFileOk() {
         SaveFiles sf = new SaveFiles();
@@ -30,32 +31,31 @@ public class MyReciever extends BroadcastReceiver {
 
     // Abonnement au Broadcast
     public void onReceive(Context context, Intent intent) {
-            this.recIsOn = MainActivity.recIsOn;
+        this.recIsOn = MainActivity.recIsOn;
 
         // Si le bouton de MAinActivity en sur enregistrement
         // on ecrit les coordonnées sur le fichier
-            if (recIsOn == true) {
-                isFileOk();
+        if (recIsOn == true) {
+            isFileOk();
 
-                // Récuperation des coordonnées envoyé par GpsService
-                this.lat = intent.getStringExtra("lat");
-                this.lon = intent.getStringExtra("lon");
+            // Récuperation des coordonnées envoyé par GpsService
+            this.lat = intent.getStringExtra("lat");
+            this.lon = intent.getStringExtra("lon");
 
 
+            // Si le fichier est sauvegarder on enregistre les
+            // cocrdonnées
+            if (fileIsOk) {
 
-                // Si le fichier est sauvegarder on enregistre les
-                // cocrdonnées
-                if (fileIsOk) {
+                //Log.i("File OK", String.valueOf(fileIsOk));
+                SaveCoordinates sc = new SaveCoordinates();
+                sc.saveCoor(lon, lat);
 
-                    //Log.i("File OK", String.valueOf(fileIsOk));
-                    SaveCoordinates sc = new SaveCoordinates();
-                    sc.saveCoor(lon, lat);
-
-                    MainActivity mainActivity = new MainActivity();
-                    mainActivity.setLat(lat, lon);
-                }
-            } else {
-                return;
+                MainActivity mainActivity = new MainActivity();
+                mainActivity.setLat(lat, lon);
             }
+        } else {
+            return;
+        }
     }
 }

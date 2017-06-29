@@ -45,10 +45,12 @@ public class GpsService extends Service {
     private void intentStatusPosition() {
         if (firstCoorInbound) {
             isCoordOK = "Position aquise !";
+            KmlFactory kml = new KmlFactory();
+            kml.headerKml(String.valueOf(latitude), String.valueOf(longitude));
+
             Log.i("Appel", "Intent");
             Intent intent = new Intent(this, MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
             intent.putExtra("lati", String.valueOf(latitude));
             intent.putExtra("longi", String.valueOf(longitude));
             startActivity(intent);
@@ -93,13 +95,13 @@ public class GpsService extends Service {
 
             switch (status) {
                 case LocationProvider.TEMPORARILY_UNAVAILABLE:
-                    newStatus = " Localisation temporairement innactive";
+                    newStatus = " temporairement innactif";
                     break;
                 case LocationProvider.AVAILABLE:
-                    newStatus = " Localisation disponible";
+                    newStatus = " disponible";
                     break;
                 case LocationProvider.OUT_OF_SERVICE:
-                    newStatus = " Localisation hors service";
+                    newStatus = " hors service";
                     break;
             }
             Toast.makeText(getBaseContext(), provider + newStatus, Toast.LENGTH_SHORT).show();
@@ -119,7 +121,6 @@ public class GpsService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.i("demarrage", "onCreate()");
     }
 
     @Override
@@ -134,12 +135,21 @@ public class GpsService extends Service {
 
     public int onStartCommand(Intent intent, int flags, int startId) {
         // Récupération des données envoyées par launcherActivity
-        long time_update_gps = intent.getLongExtra("update_time", 1500);
-        float location_update_gps = intent.getFloatExtra("update_location", 3);
-        Log.i("time update", String.valueOf(time_update_gps));
-        Log.i("location update", String.valueOf(location_update_gps));
-        // Appel abonement gps
-        abonementGps(time_update_gps, location_update_gps);
+        // Mise à jour du timeUpdate et locationUpdate
+
+        long time_update_gps;
+        float location_update_gps;
+        if (intent != null) {
+            time_update_gps = intent.getLongExtra("update_time", 1500);
+            location_update_gps = intent.getFloatExtra("update_location", 3);
+            Log.i("time update", String.valueOf(time_update_gps));
+            Log.i("location update", String.valueOf(location_update_gps));
+            // Appel abonement gps
+            abonementGps(time_update_gps, location_update_gps);
+        } else {
+            time_update_gps = 1;
+            location_update_gps = 1;
+        }
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -150,8 +160,9 @@ public class GpsService extends Service {
     }
 
     public void abonementGps(long time, float location) {
+
         locationMgr = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        // gestion de la permission utilisateur
+        // gestion des permissions utilisateur
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
