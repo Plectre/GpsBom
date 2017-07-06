@@ -51,9 +51,9 @@ public class SaveFiles extends Activity{
 
     // Création du Dossier GpsBom
     public void createDir(String pName) {
-        this.fName = pName;
+        fName = pName;
         this.fFilePath = new File(path + DIR);
-        this.sFilePath = String.valueOf(fFilePath);
+        sFilePath = String.valueOf(fFilePath);
 
         if (!fFilePath.exists()) {
             fFilePath.mkdir();
@@ -64,7 +64,7 @@ public class SaveFiles extends Activity{
             try {
                 fichier.createNewFile();
                 //Log.e(pName, "Créer");
-                this.fName = pName+".kml";
+                fName = pName+".kml";
                 Log.e("isCreate SaveFile", String.valueOf(isCreate));
                 isCreate = true;
                 //GpsService gps = new GpsService();

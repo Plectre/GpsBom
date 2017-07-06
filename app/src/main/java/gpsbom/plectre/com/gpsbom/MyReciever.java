@@ -3,7 +3,6 @@ package gpsbom.plectre.com.gpsbom;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 
 /**
  * Created by plectre on 09/03/17.

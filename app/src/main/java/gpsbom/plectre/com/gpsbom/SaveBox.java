@@ -1,18 +1,10 @@
 package gpsbom.plectre.com.gpsbom;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.Fragment;
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.StrictMode;
-import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -73,7 +65,7 @@ public class SaveBox extends Dialog implements android.view.View.OnClickListener
     }
 
     public void dialogIsEmpty() {
-        Toast.makeText(getContext(), "Remplir tous les champs ...", Toast.LENGTH_LONG).show();
+        Toast.makeText(getContext(), "Merci de nommer le fichier ...", Toast.LENGTH_LONG).show();
     }
 
     // Methode céation fichier

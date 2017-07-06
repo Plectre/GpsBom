@@ -16,6 +16,8 @@ public class KmlFactory extends Activity {
 
     private String fName;
     private String path;
+    private String DEBUT = "Debut";
+    private String FIN = "Fin";
     private String NEW_LINE = System.lineSeparator();
     private String kml;
 
@@ -29,14 +31,7 @@ public class KmlFactory extends Activity {
                 + "<Document>" + NEW_LINE
                 + "<name>" + fName + "</name>" + NEW_LINE
                 + "<Placemark>" + NEW_LINE
-                //+ "<name>debut</name>" + NEW_LINE
-                //+ "<styleUrl></styleUrl>" + NEW_LINE
-                //+ "<LineString>" + NEW_LINE
-                //+ "<tesselate>1</tesselate>" + NEW_LINE
-                //+ "<altitudeMode>clampToGround</altitudeMode>" + NEW_LINE
-                // + <coordinates> + NEW_LINE;
-                //+ "<Placemark>" + NEW_LINE
-                + "<name>" + "debut" + "</name>" + NEW_LINE
+                + "<name>" +DEBUT+"</name>" + NEW_LINE
                 + "<Point>" + NEW_LINE
                 + "<coordinates>" + NEW_LINE
                 + lon + "," +lat + NEW_LINE
@@ -50,7 +45,20 @@ public class KmlFactory extends Activity {
                 + "<coordinates>";
         saveKml(header);
     }
-
+    // Point noir
+    public void blackPoint(String lat, String lon) {
+        String blackPoint = "</coordinates>" + NEW_LINE
+                + "</Placemark>" + NEW_LINE
+                + "<Placemark>" + NEW_LINE
+                + "<name>" +"point noir"+"</name>" + NEW_LINE
+                + "<Point>" + NEW_LINE
+                + "<coordinates>" + NEW_LINE
+                + lon + "," +lat + NEW_LINE
+                + "</coordinates>" + NEW_LINE
+                + "</Point>" + NEW_LINE
+                + "</Placemark>";
+        saveKml(blackPoint);
+    }
 
     // Body kml
     public void setKml(String typeCollecte, String lat, String lon) {
@@ -87,7 +95,7 @@ public class KmlFactory extends Activity {
                 + "</LineString>" + NEW_LINE
                 + "</Placemark>" + NEW_LINE
                 + "<Placemark>" + NEW_LINE
-                + "<name>" + "fin" + "</name>" + NEW_LINE
+                + "<name>" + FIN + "</name>" + NEW_LINE
                 + "<Point>" + NEW_LINE
                 + "<coordinates>" + NEW_LINE
                 + lon +","+ lat + NEW_LINE

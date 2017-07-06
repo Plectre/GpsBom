@@ -8,4 +8,5 @@
     <color name="red">#861d24</color>
     <color name="colorButton">#7d0f9c0f</color>
     <color name="textColor">#ff000000</color>
+    <color name="btnPointNoir">#303333</color>
 </resources>

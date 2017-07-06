@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import static android.R.color.black;
 
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     public String gpsStatus = "GAZZZzzzzzz !!!!";
     public Button btn_rec;
     public Button btn_stop;
+    public Button btn_noir;
     public RadioGroup rd_group;
     public static String lat;
     public static String lon;
@@ -60,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
         txt_status_gps = (TextView) findViewById(R.id.txt_satus_gps);
         btn_rec = (Button) findViewById(R.id.btn_rec);
         btn_stop = (Button) findViewById(R.id.btn_stop);
+        btn_noir = (Button) findViewById(R.id.btn_point_noir);
 
         fadeAnim = AnimationUtils.loadAnimation(MainActivity.this, R.anim.anim);
         AfficheGpsStatus(gpsStatus);
@@ -87,6 +90,15 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+     /** btn_noir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pointNoir(lat, lon);
+                Toast.makeText(MainActivity.this,"Point noir enregistré",Toast.LENGTH_SHORT).show();
+            }
+        });
+    */
 
         // Recuperation de l'Intent envoyé par gpsService
         Intent intent = getIntent();
@@ -153,6 +165,11 @@ public class MainActivity extends AppCompatActivity {
         KmlFactory kmlFactory = new KmlFactory();
         kmlFactory.setKml(pTypeCollecte, lat, lon);
     }
+    // Appel fonction point noir
+    public void pointNoir(String lat, String lon){
+        KmlFactory kmlFactory = new KmlFactory();
+        kmlFactory.blackPoint(lat, lon);
+    }
 
     // Appel du footer kml
     public void stopTracking() {
@@ -179,8 +196,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setLat(String pLat, String pLon) {
-        this.lat = pLat;
-        this.lon = pLon;
+        lat = pLat;
+        lon = pLon;
 
         txt_lon.setText(lon);
         txt_lat.setText(lat);

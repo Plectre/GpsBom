@@ -3,6 +3,7 @@
 
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
     android:orientation="vertical">
 
     <LinearLayout
@@ -17,21 +18,23 @@
         <TextView
             android:id="@+id/txt_latitude"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="left"
             android:layout_weight="0.5"
             android:gravity="center"
             android:maxLength="10"
+            android:textColor="@color/textColor"
             android:textSize="@dimen/textView" />
 
         <TextView
             android:id="@+id/txt_longitude"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:layout_weight="0.5"
-            android:maxLength="10"
             android:gravity="center"
+            android:maxLength="10"
+            android:textColor="@color/textColor"
             android:textSize="@dimen/textView" />
 
     </LinearLayout>
@@ -46,24 +49,24 @@
 
         <RadioButton
             android:id="@+id/radio_hlp"
-            android:maxLines="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:layout_weight="1"
+            android:maxLines="1"
             android:padding="@dimen/padding_radio"
             android:text="@string/haut_le_pieds"
-            android:textSize="@dimen/h1" />
+            android:textSize="@dimen/h2" />
 
         <RadioButton
             android:id="@+id/radio_ulat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:padding="@dimen/padding_radio"
             android:layout_weight="1"
+            android:padding="@dimen/padding_radio"
             android:text="@string/uni_lateral_droit"
-            android:textSize="@dimen/h1" />
+            android:textSize="@dimen/h2" />
 
         <RadioButton
             android:id="@+id/radio_biLat"
@@ -73,17 +76,17 @@
 
             android:layout_weight="1"
             android:text="@string/bi_lateral"
-            android:textSize="@dimen/h1" />
+            android:textSize="@dimen/h2" />
 
         <RadioButton
             android:id="@+id/radio_m_a"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:padding="@dimen/padding_radio"
             android:layout_weight="1"
+            android:padding="@dimen/padding_radio"
             android:text="@string/marche_arriere"
-            android:textSize="@dimen/h1" />
+            android:textSize="@dimen/h2" />
 
     </RadioGroup>
 
@@ -99,7 +102,8 @@
             android:id="@+id/txt_plot"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:textSize="@dimen/h2" />
 
         <TextView
             android:id="@+id/txt_satus_gps"
@@ -110,16 +114,7 @@
             android:gravity="center"
             android:text="@string/init_status_gps"
             android:textAlignment="center"
-            android:textSize="@dimen/h1" />
-        <!--
-                <ImageView
-                    android:id="@+id/img_satellite"
-                    android:layout_width="200dp"
-                    android:layout_height="200dp"
-                    android:layout_gravity="center"
-                    android:layout_margin="@dimen/margin"
-                    android:background="@drawable/probe" />
-                    -->
+            android:textSize="@dimen/h2" />
 
         <TextView
             android:id="@+id/txt_typeDeCollecte"
@@ -127,7 +122,17 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/tirets"
+            android:textColor="@color/textColor"
             android:textSize="75sp" />
+
+        <Button
+            android:id="@+id/btn_point_noir"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@color/btnPointNoir"
+            android:textAlignment="center" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -137,7 +142,6 @@
         android:layout_gravity="bottom"
         android:layout_weight="0.50"
         android:orientation="horizontal"
-
         android:padding="@dimen/padding">
 
         <Button
