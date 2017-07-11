@@ -9,8 +9,33 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/txt_accuracy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="@dimen/margin"
+            android:text="Precision:"
+            android:textAlignment="center"
+            android:textSize="@dimen/h2" />
+
+        <TextView
+            android:id="@+id/txt_bearing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin"
+            android:layout_weight="1"
+            android:text="Cap:"
+            android:textAlignment="center"
+            android:textSize="@dimen/h2" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_margin="@dimen/margin"
         android:layout_weight="0.33"
         android:orientation="horizontal">
 
@@ -24,7 +49,7 @@
             android:gravity="center"
             android:maxLength="10"
             android:textColor="@color/textColor"
-            android:textSize="@dimen/textView" />
+            android:textSize="@dimen/h2" />
 
         <TextView
             android:id="@+id/txt_longitude"
@@ -35,8 +60,7 @@
             android:gravity="center"
             android:maxLength="10"
             android:textColor="@color/textColor"
-            android:textSize="@dimen/textView" />
-
+            android:textSize="@dimen/h2" />
     </LinearLayout>
 
     <RadioGroup
@@ -95,8 +119,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:layout_weight="0.33"
-        android:orientation="vertical"
-        android:padding="10dp">
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/txt_plot"
@@ -108,13 +131,24 @@
         <TextView
             android:id="@+id/txt_satus_gps"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin"
             android:layout_weight="1"
             android:gravity="center"
             android:text="@string/init_status_gps"
             android:textAlignment="center"
             android:textSize="@dimen/h2" />
+
+        <Button
+            android:id="@+id/btn_point_noir"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_gravity="bottom|center_horizontal"
+            android:background="@drawable/custom_button"
+            android:elevation="16dp"
+            android:text="poi"
+            android:textAlignment="center"
+            android:textColor="@color/btnPointNoir" />
 
         <TextView
             android:id="@+id/txt_typeDeCollecte"
@@ -125,13 +159,6 @@
             android:textColor="@color/textColor"
             android:textSize="75sp" />
 
-        <Button
-            android:id="@+id/btn_point_noir"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@color/btnPointNoir"
-            android:textAlignment="center" />
 
     </LinearLayout>
 
@@ -141,27 +168,26 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:layout_weight="0.50"
-        android:orientation="horizontal"
-        android:padding="@dimen/padding">
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/btn_stop"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
+            android:layout_gravity="center"
             android:layout_margin="2dp"
             android:layout_weight="0.33"
-            android:background="@color/colorButton"
+            android:background="@drawable/custom_button"
             android:text="@string/stop" />
 
         <Button
             android:id="@+id/btn_rec"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
+            android:layout_gravity="center"
             android:layout_margin="2dp"
             android:layout_weight="0.33"
-            android:background="@color/colorButton"
+            android:background="@drawable/custom_button"
             android:text="@string/record" />
 
     </LinearLayout>

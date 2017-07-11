@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Traker Bom</string>
+    <string name="app_name">Service BOM</string>
     <string name="btn_save">SAUVGARDER</string>
     <string name="status_gps">Position en cours d\'acquisition</string>
     <string name="demarrer_service">Demarrer Service</string>
@@ -10,7 +10,7 @@
     <string name="bi_lateral">BI-LAT</string>
     <string name="marche_arriere">M-A</string>
     <string name="init_status_gps">BOM GPS</string>
-    <string name="tirets">--</string>
+    <string name="tirets">---</string>
     <string name="stop">Stop</string>
     <string name="record">Rec</string>
     <string name="delta_metre">Distance métre</string>

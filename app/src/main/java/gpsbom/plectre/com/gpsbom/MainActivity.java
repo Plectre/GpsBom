@@ -17,8 +17,6 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import static android.R.color.black;
-
 
 /**
  * Created by Thierry ALVAREZ "Plectre" on 20/03/17.
@@ -32,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
     public static TextView txt_lat;
     public static TextView txt_lon;
     public static TextView txt_plot;
+    public static TextView txt_accuracy;
+    public static TextView txt_bearing;
     public String gpsStatus = "GAZZZzzzzzz !!!!";
     public Button btn_rec;
     public Button btn_stop;
@@ -57,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
         txt_lat = (TextView) findViewById(R.id.txt_latitude);
         txt_lon = (TextView) findViewById(R.id.txt_longitude);
         txt_plot = (TextView) findViewById(R.id.txt_plot);
+        txt_accuracy = (TextView) findViewById(R.id.txt_accuracy);
+        txt_bearing = (TextView) findViewById(R.id.txt_bearing);
         rd_group = (RadioGroup) findViewById(R.id.radio_group);
 
         txt_status_gps = (TextView) findViewById(R.id.txt_satus_gps);
@@ -91,14 +93,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-     /** btn_noir.setOnClickListener(new View.OnClickListener() {
+        btn_noir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 pointNoir(lat, lon);
-                Toast.makeText(MainActivity.this,"Point noir enregistré",Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Point noir enregistré", Toast.LENGTH_SHORT).show();
             }
         });
-    */
+
 
         // Recuperation de l'Intent envoyé par gpsService
         Intent intent = getIntent();
@@ -165,8 +167,9 @@ public class MainActivity extends AppCompatActivity {
         KmlFactory kmlFactory = new KmlFactory();
         kmlFactory.setKml(pTypeCollecte, lat, lon);
     }
+
     // Appel fonction point noir
-    public void pointNoir(String lat, String lon){
+    public void pointNoir(String lat, String lon) {
         KmlFactory kmlFactory = new KmlFactory();
         kmlFactory.blackPoint(lat, lon);
     }
@@ -182,6 +185,8 @@ public class MainActivity extends AppCompatActivity {
         // Sauvegarde du footer kmlFactory
         KmlFactory kmlFactory = new KmlFactory();
         kmlFactory.footerKml(lat, lon);
+        // Fermeture du fichier point
+        kmlFactory.footerPoint();
     }
 
     // Fonction qui stoppe le service GPS
@@ -195,12 +200,15 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void setLat(String pLat, String pLon) {
+    public void setLat(String pLat, String pLon, String accuracy, String bearing) {
         lat = pLat;
         lon = pLon;
 
+        txt_plot.setText("");
         txt_lon.setText(lon);
         txt_lat.setText(lat);
+        txt_accuracy.setText("Precision: \n" + accuracy + " m");
+        txt_bearing.setText("Cap: \n" + bearing + " °");
         txt_plot.setText("! ... Recording ... !");
     }
 

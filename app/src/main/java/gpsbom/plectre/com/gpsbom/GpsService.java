@@ -26,10 +26,17 @@ import android.widget.Toast;
 public class GpsService extends Service {
 
     private LocationManager locationMgr = null;
+
     private Boolean firstCoorInbound = true;
+
     private double latitude;
     private double longitude;
+    private float bearing;
+    private float accuracy;
+
     private String isCoordOK = "Position en cours !";
+
+    private Boolean isFirstime = false; // boolean qui verifie si le toast dispo à etait affiché
 //    private long time_update_gps = 0; // Delta entre chaque enregistrement de coord en millisecondes
 //    // ou
 //    private float location_update_gps = 0; // Delta entre chaque enregistrement de coord en Métres
@@ -64,6 +71,13 @@ public class GpsService extends Service {
         public void onLocationChanged(Location location) {
             latitude = location.getLatitude();
             longitude = location.getLongitude();
+
+            // Manipulation des getAccuracy et getBearing
+            // Afin de les caster en int pour ne pas afficher les decimales
+            accuracy = Math.round(location.getAccuracy());
+            int intAccuracy = (int) accuracy;
+            bearing = Math.round(location.getBearing());
+            int intBearing = (int) bearing;
             // A la premiere aquisition de la position
             // Appel de la méthode intentStatusPosition
             if (firstCoorInbound) {
@@ -82,9 +96,13 @@ public class GpsService extends Service {
 
             String str_lat = String.valueOf(latitude);
             String str_lon = String.valueOf(longitude);
+            String str_accuracy = String.valueOf(intAccuracy);
+            String str_bearing = String.valueOf(intBearing);
 
             intent.putExtra("lat", str_lat);
             intent.putExtra("lon", str_lon);
+            intent.putExtra("accuracy", str_accuracy);
+            intent.putExtra("bearing", str_bearing);
 
             sendBroadcast(intent);
         }
@@ -96,15 +114,20 @@ public class GpsService extends Service {
             switch (status) {
                 case LocationProvider.TEMPORARILY_UNAVAILABLE:
                     newStatus = " temporairement innactif";
+                    isFirstime = false;
                     break;
                 case LocationProvider.AVAILABLE:
                     newStatus = " disponible";
+                    isFirstime = true;
                     break;
                 case LocationProvider.OUT_OF_SERVICE:
                     newStatus = " hors service";
+                    isFirstime = false;
                     break;
             }
-            Toast.makeText(getBaseContext(), provider + newStatus, Toast.LENGTH_SHORT).show();
+            if (isFirstime = false) {
+                Toast.makeText(getBaseContext(), provider + newStatus, Toast.LENGTH_SHORT).show();
+            }
         }
 
         @Override
@@ -133,6 +156,7 @@ public class GpsService extends Service {
         locationMgr.removeUpdates(onLocationChange);
     }
 
+    // Methode appellée au demarrge du service
     public int onStartCommand(Intent intent, int flags, int startId) {
         // Récupération des données envoyées par launcherActivity
         // Mise à jour du timeUpdate et locationUpdate
@@ -169,7 +193,6 @@ public class GpsService extends Service {
                 != PackageManager.PERMISSION_GRANTED) {
             return;
 
-
         }
 
         Log.i("APP", "Time update " + time);
@@ -177,5 +200,43 @@ public class GpsService extends Service {
         locationMgr.requestLocationUpdates(LocationManager.GPS_PROVIDER, time,
                 location, onLocationChange);
     }
-}
 
+    public String formatBearing(float bearing) {
+        String str_bearing = "";
+        float formatBearing = 0;
+        if (bearing > 180) {
+            formatBearing = bearing * (-1);
+            str_bearing = String.valueOf(formatBearing);
+        } else {
+            formatBearing = bearing;
+            str_bearing = String.valueOf(formatBearing);
+        }
+
+        if (formatBearing < -157.5 && formatBearing <= 22.5) {
+            str_bearing = "N";
+        }
+        if (formatBearing > 22.5 && formatBearing <= 67.5) {
+            str_bearing = "NNE";
+        }
+        if (formatBearing > 67.5 && formatBearing <= 112.5) {
+            str_bearing = "E";
+        }
+        if (formatBearing > 112.5 && formatBearing <= 157.5) {
+            str_bearing = "SSE";
+        }
+        if (formatBearing > 157.55 && formatBearing >= -202.5) {
+            str_bearing = "S";
+        }
+        if (formatBearing < -202.5 && formatBearing >= -247.5) {
+            str_bearing = "SSW";
+        }
+        if (formatBearing < -247.5 && formatBearing >= -292.5) {
+            str_bearing = "W";
+        }
+        if (formatBearing < -292.5 && formatBearing >= -157.5) {
+            str_bearing = "NNW";
+        }
+
+        return str_bearing;
+    }
+}

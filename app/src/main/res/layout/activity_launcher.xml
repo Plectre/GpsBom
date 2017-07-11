@@ -120,7 +120,7 @@
             android:layout_gravity="center"
             android:layout_margin="@dimen/margin"
             android:layout_weight="0.1"
-            android:background="@color/colorButton"
+            android:background="@drawable/custom_button"
             android:elevation="6dp"
             android:padding="@dimen/padding"
             android:text="@string/demarrer_service"
@@ -133,7 +133,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin"
             android:layout_weight="0.1"
-            android:background="@color/colorButton"
+            android:background="@drawable/custom_button"
             android:padding="@dimen/padding"
             android:text="@string/recherche_position"
             tools:ignore="RtlHardcoded" />

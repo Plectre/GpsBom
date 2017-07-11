@@ -20,12 +20,13 @@ public class KmlFactory extends Activity {
     private String FIN = "Fin";
     private String NEW_LINE = System.lineSeparator();
     private String kml;
+    private String pointFichierName;
 
 
     // Header kml
     public void headerKml(String lat, String lon) {
         getDirPath();
-        // "<kml xmlns:kml=\"http://www.opengis.net/kml/2.2\">"
+
         String header = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + NEW_LINE
                 + "<kml xmlns=\"http://www.opengis.net/kml/2.2\">" + NEW_LINE
                 + "<Document>" + NEW_LINE
@@ -45,20 +46,7 @@ public class KmlFactory extends Activity {
                 + "<coordinates>";
         saveKml(header);
     }
-    // Point noir
-    public void blackPoint(String lat, String lon) {
-        String blackPoint = "</coordinates>" + NEW_LINE
-                + "</Placemark>" + NEW_LINE
-                + "<Placemark>" + NEW_LINE
-                + "<name>" +"point noir"+"</name>" + NEW_LINE
-                + "<Point>" + NEW_LINE
-                + "<coordinates>" + NEW_LINE
-                + lon + "," +lat + NEW_LINE
-                + "</coordinates>" + NEW_LINE
-                + "</Point>" + NEW_LINE
-                + "</Placemark>";
-        saveKml(blackPoint);
-    }
+
 
     // Body kml
     public void setKml(String typeCollecte, String lat, String lon) {
@@ -107,12 +95,46 @@ public class KmlFactory extends Activity {
         saveKml(footer);
     }
 
+    // Header Points
+    public void headerPoints(String nomDuFichier) {
+        String headerPoints = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + NEW_LINE
+                + "<kml xmlns=\"http://www.opengis.net/kml/2.2\">" + NEW_LINE
+                + "<Document>" + NEW_LINE
+                + "<name>" + nomDuFichier + "</name>";
+        saveKmlPoints(headerPoints);
+    }
+    // Coordonnées Point noir
+    public void blackPoint(String lat, String lon) {
+
+        String blackPoint = "<Placemark>" + NEW_LINE
+                + "<name>poi</name>" + NEW_LINE
+                + "<Point>" + NEW_LINE
+                + "<coordinates>" + NEW_LINE
+                + lon + "," +lat + NEW_LINE
+                + "</coordinates>" + NEW_LINE
+                + "</Point>" + NEW_LINE
+                + "</Placemark>";
+        saveKmlPoints(blackPoint);
+    }
+
+    public void footerPoint() {
+
+        String footer = "</Document>" + NEW_LINE
+                        + "</kml>";
+        saveKmlPoints(footer);
+    }
+
     // On recupere nom du dossier créer dans la classe SaveFile()
     public void getDirPath() {
         SaveFiles sf = new SaveFiles();
         //this.fDossier = sf.getFilePath();
         this.fName = sf.getfName();
         this.path = sf.getFilePath();
+    }
+    public void getFichierPoints(){
+        SaveFiles sf = new SaveFiles();
+        this.path = sf.getFilePath();
+        this.pointFichierName = sf.getNomFichierPoints();
     }
 
     public void saveKml(String kmlpart) {
@@ -129,6 +151,22 @@ public class KmlFactory extends Activity {
             output.close();
         } catch (IOException ex) {
             Log.e("Enregistrement fail", String.valueOf(ex));
+        }
+    }
+
+    public void saveKmlPoints(String kmlPart) {
+        getFichierPoints();
+        SaveFiles sf = new SaveFiles();
+        pointFichierName = sf.getNomFichierPoints();
+        File file = new File(path, pointFichierName);
+        try{
+            FileWriter output = new FileWriter (file, true);
+            output.append(kmlPart);
+            output.write(NEW_LINE);
+            output.close();
+            Log.i("APP", "ecriture header point" + path + "/" +pointFichierName + " _ " + kmlPart);
+        } catch (IOException ex){
+            Log.e("APP", "erreur ecriture header points");
         }
     }
 }

@@ -17,6 +17,8 @@ public class MyReciever extends BroadcastReceiver {
 
     private String lat;
     private String lon;
+    private String accuracy;
+    private String bearing;
     private Boolean fileIsOk;
     private Boolean recIsOn;
 
@@ -40,6 +42,8 @@ public class MyReciever extends BroadcastReceiver {
             // Récuperation des coordonnées envoyé par GpsService
             this.lat = intent.getStringExtra("lat");
             this.lon = intent.getStringExtra("lon");
+            this.accuracy = intent.getStringExtra("accuracy");
+            this.bearing = intent.getStringExtra("bearing");
 
 
             // Si le fichier est sauvegarder on enregistre les
@@ -51,7 +55,7 @@ public class MyReciever extends BroadcastReceiver {
                 sc.saveCoor(lon, lat);
 
                 MainActivity mainActivity = new MainActivity();
-                mainActivity.setLat(lat, lon);
+                mainActivity.setLat(lat, lon, accuracy, bearing);
             }
         } else {
             return;

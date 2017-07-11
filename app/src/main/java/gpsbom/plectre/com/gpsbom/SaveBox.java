@@ -42,7 +42,7 @@ public class SaveBox extends Dialog implements android.view.View.OnClickListener
         cancel.setOnClickListener(this);
     }
 
-    // gestion des boutons cliqués
+    // Gestion des boutons cliqués
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -51,7 +51,6 @@ public class SaveBox extends Dialog implements android.view.View.OnClickListener
                 if (edText.getText().toString().equals("")) {
                     dialogIsEmpty();
                 } else {
-                    //Log.e("edText :", "!= null");
                     edTexSaveOK(v);
                 }
                 break;
@@ -71,7 +70,6 @@ public class SaveBox extends Dialog implements android.view.View.OnClickListener
     // Methode céation fichier
     public void edTexSaveOK(View v) {
         fichierName = String.valueOf(edText.getText());
-        //Log.e("SAVE", fichierName);
         // Vérification des fichiers d'enregistrement
         SaveFiles saveDirectory = new SaveFiles();
         saveDirectory.testCarteSd(fichierName);
