@@ -16,6 +16,8 @@ import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.text.DecimalFormat;
+
 /**
  * Created by plectre on 08/03/17.
  * Classe Service se charge du GPS et envoi
@@ -28,7 +30,8 @@ public class GpsService extends Service {
     private LocationManager locationMgr = null;
 
     private Boolean firstCoorInbound = true;
-
+    private String str_accuracy;
+    private String str_bearing;
     private double latitude;
     private double longitude;
     private float bearing;
@@ -60,6 +63,7 @@ public class GpsService extends Service {
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.putExtra("lati", String.valueOf(latitude));
             intent.putExtra("longi", String.valueOf(longitude));
+
             startActivity(intent);
         }
         firstCoorInbound = false;
@@ -97,7 +101,8 @@ public class GpsService extends Service {
             String str_lat = String.valueOf(latitude);
             String str_lon = String.valueOf(longitude);
             String str_accuracy = String.valueOf(intAccuracy);
-            String str_bearing = String.valueOf(intBearing);
+            // Appel methode pour formatage du cap pour affichage...
+            str_bearing = formatBearing(bearing);
 
             intent.putExtra("lat", str_lat);
             intent.putExtra("lon", str_lon);
@@ -166,13 +171,11 @@ public class GpsService extends Service {
         if (intent != null) {
             time_update_gps = intent.getLongExtra("update_time", 1500);
             location_update_gps = intent.getFloatExtra("update_location", 3);
-            Log.i("time update", String.valueOf(time_update_gps));
-            Log.i("location update", String.valueOf(location_update_gps));
+            //Log.i("time update", String.valueOf(time_update_gps));
+            //Log.i("location update", String.valueOf(location_update_gps));
+
             // Appel abonement gps
             abonementGps(time_update_gps, location_update_gps);
-        } else {
-            time_update_gps = 1;
-            location_update_gps = 1;
         }
         return super.onStartCommand(intent, flags, startId);
     }
@@ -202,17 +205,14 @@ public class GpsService extends Service {
     }
 
     public String formatBearing(float bearing) {
-        String str_bearing = "";
-        float formatBearing = 0;
-        if (bearing > 180) {
-            formatBearing = bearing * (-1);
-            str_bearing = String.valueOf(formatBearing);
-        } else {
-            formatBearing = bearing;
-            str_bearing = String.valueOf(formatBearing);
+        //Log.i("GPS", String.valueOf(bearing));
+        float formatBearing = bearing;
+
+        if (formatBearing == 0.0) {
+            str_bearing = "--";
         }
 
-        if (formatBearing < -157.5 && formatBearing <= 22.5) {
+        if (formatBearing > 0 && formatBearing <= 22.5) {
             str_bearing = "N";
         }
         if (formatBearing > 22.5 && formatBearing <= 67.5) {
@@ -224,17 +224,21 @@ public class GpsService extends Service {
         if (formatBearing > 112.5 && formatBearing <= 157.5) {
             str_bearing = "SSE";
         }
-        if (formatBearing > 157.55 && formatBearing >= -202.5) {
+        if (formatBearing > 157.55 && formatBearing <= 202.5) {
             str_bearing = "S";
         }
-        if (formatBearing < -202.5 && formatBearing >= -247.5) {
+        if (formatBearing > 202.5 && formatBearing <= 247.5) {
             str_bearing = "SSW";
         }
-        if (formatBearing < -247.5 && formatBearing >= -292.5) {
+        if (formatBearing > 247.5 && formatBearing <= 292.5) {
             str_bearing = "W";
         }
-        if (formatBearing < -292.5 && formatBearing >= -157.5) {
+        if (formatBearing > 292.5 && formatBearing <= 337.5) {
             str_bearing = "NNW";
+        }
+
+        if (formatBearing > 337.5 && formatBearing <= 359.9) {
+            str_bearing = "N";
         }
 
         return str_bearing;

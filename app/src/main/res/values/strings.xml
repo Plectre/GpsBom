@@ -15,4 +15,7 @@
     <string name="record">Rec</string>
     <string name="delta_metre">Distance métre</string>
     <string name="delta_seconde">Temps seconde</string>
+    <string name="recording">! . Recording . !</string>
+    <string name="cap">Cap: </string>
+    <string name="precision">Precision:</string>
 </resources>

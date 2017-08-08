@@ -17,7 +17,6 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 /**
  * Created by Thierry ALVAREZ "Plectre" on 20/03/17.
  * Activitée principale
@@ -68,7 +67,6 @@ public class MainActivity extends AppCompatActivity {
 
         fadeAnim = AnimationUtils.loadAnimation(MainActivity.this, R.anim.anim);
         AfficheGpsStatus(gpsStatus);
-
         onRadioGroupChange();
 
         // Gestion des boutons stop rec et pause
@@ -86,6 +84,9 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // On stoppe l'enregistrement
                 recIsOn = false;
+//                CloseApp close = new CloseApp(MainActivity.this);
+//                close.show();
+
                 // On ferme le fichier kml en appelant le footer
                 stopTracking();
                 stopGpsService();
@@ -106,9 +107,12 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = getIntent();
         lat = intent.getStringExtra("lati");
         lon = intent.getStringExtra("longi");
+        String str_accuracy = intent.getStringExtra("accuracy");
+        String str_bearing = intent.getStringExtra("bearing");
         // Affichage des premiéres coordonnées
         txt_lat.setText(lat);
         txt_lon.setText(lon);
+
         // Demarrer Fade Animation
         txt_typeDeCollecte.startAnimation(fadeAnim);
     }
@@ -199,17 +203,18 @@ public class MainActivity extends AppCompatActivity {
         txt_plot.setText("");
 
     }
-
+    // Mise à jour des affichages
     public void setLat(String pLat, String pLon, String accuracy, String bearing) {
-        lat = pLat;
-        lon = pLon;
+        String lat = pLat;
+        String lon = pLon;
 
-        txt_plot.setText("");
-        txt_lon.setText(lon);
-        txt_lat.setText(lat);
-        txt_accuracy.setText("Precision: \n" + accuracy + " m");
-        txt_bearing.setText("Cap: \n" + bearing + " °");
-        txt_plot.setText("! ... Recording ... !");
+       // txt_plot.setText("");
+        txt_lon.setText(lon + "°");
+        txt_lat.setText(lat + "°");
+        txt_accuracy.setText("Precision: " + accuracy + " m");
+        txt_bearing.setText("Cap: " + bearing);
+        txt_plot.setText(R.string.recording);
+
     }
 
     public void AfficheGpsStatus(String pGpsStatus) {
