@@ -1,6 +1,7 @@
 package gpsbom.plectre.com.gpsbom;
 
 import android.app.Activity;
+import android.content.Context;
 import android.util.Log;
 
 import java.io.File;
@@ -13,7 +14,7 @@ import java.io.IOException;
  */
 
 public class KmlFactory extends Activity {
-
+    public Context context;
     private String fName;
     private String path;
     private String DEBUT = "Debut";
@@ -105,6 +106,9 @@ public class KmlFactory extends Activity {
     }
     // Coordonnées Point noir
     public void blackPoint(String lat, String lon) {
+
+        //SavePoiBox savePoiBox = new SavePoiBox(this);
+        //savePoiBox.show();
 
         String blackPoint = "<Placemark>" + NEW_LINE
                 + "<name>poi</name>" + NEW_LINE
