@@ -32,6 +32,8 @@ public class GpsService extends Service {
     private Boolean firstCoorInbound = true;
     private String str_accuracy;
     private String str_bearing;
+
+
     private double latitude;
     private double longitude;
     private float bearing;
@@ -242,5 +244,16 @@ public class GpsService extends Service {
         }
 
         return str_bearing;
+    }
+    /** ---------------------------------
+    * ------------- GETTERS -------------
+    * -----------------------------------*/
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
     }
 }

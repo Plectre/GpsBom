@@ -1,9 +1,16 @@
 package gpsbom.plectre.com.gpsbom;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Environment;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.ContextThemeWrapper;
 import android.widget.Toast;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -15,7 +22,7 @@ import java.io.IOException;
  * E//storage/emulated/0/Gps Bom
  */
 
-public class SaveFiles extends Activity {
+public class SaveFiles  {
 
     private String path;
     public static Boolean isCreate = false;
@@ -27,10 +34,13 @@ public class SaveFiles extends Activity {
     private static String fName;
     private String pNoirs;
     private static String nomFichierPoints;
+    private Context context;
+    private Activity activity;
 
     public String getNomFichierPoints() {
         return nomFichierPoints;
     }
+
     public String getfName() {
         return fName;
     }
@@ -41,6 +51,14 @@ public class SaveFiles extends Activity {
 
     public Boolean getIsCreate() {
         return isCreate;
+    }
+
+
+    public SaveFiles() {
+    }
+    public SaveFiles(Context c, Activity activity){
+        this.context = c;
+        this.activity = activity;
     }
 
     public void testCarteSd(String pName) {
@@ -55,7 +73,7 @@ public class SaveFiles extends Activity {
             return;
         } else {
 
-            Toast.makeText(this, "Pas de carte",Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Pas de carte", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -70,17 +88,39 @@ public class SaveFiles extends Activity {
             fFilePath.mkdir();
             //Log.i("Dossier créer", "");
         }
+
+        // Creation du fichier .kml
         fichier = new File(fFilePath + "/" + pName + ".kml");
-        if (!fichier.exists()) {
+        if (fichier.exists()) {
+
+            // Ouverture d'une alertDialog si le fichier existe déjà
+            AlertBox alertBox = new AlertBox(context);
+            alertBox.setTitle("Warning ! ");
+            alertBox.setMessage("Le fichier existe déjà !");
+            alertBox.setButton(AlertDialog.BUTTON_NEUTRAL, "CANCEL",
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent i = new Intent(activity, LauncherActivity.class);
+                            dialog.dismiss();
+                            activity.startActivity(i);
+                            return;
+                        }
+                    });
+            alertBox.show();
+            return;
+
+        } else {
             try {
                 fichier.createNewFile();
-                //Log.e(pName, "Créer");
+
                 fName = pName + ".kml";
                 Log.e("isCreate SaveFile", String.valueOf(isCreate));
                 isCreate = true;
-                //GpsService gps = new GpsService();
+
                 Log.e("isCreate SaveFile", String.valueOf(isCreate));
                 filePoints(pName);
+
                 // instanciation de la classe kmlFactory et appel de la methode header
                 // qui sauvegarde l'entête du kml
                 //KmlFactory kmlFactory = new KmlFactory();
@@ -90,10 +130,9 @@ public class SaveFiles extends Activity {
                 e.printStackTrace();
 
             }
-        } else {
-            //Log.e(sFilePath, "Existe déjà");
-            return;
         }
+        Log.e(sFilePath, "Existe déjà");
+
         sFilePath = String.valueOf(fFilePath);
         //Log.e(DIR, "Existe");
         //Log.e(String.valueOf(fFilePath), "fFilePath");
@@ -110,6 +149,14 @@ public class SaveFiles extends Activity {
         } catch (IOException e) {
             Log.e("APP", "Erreur ecriture filePoints " + e);
             e.printStackTrace();
+        }
+    }
+
+    protected class AlertBox extends android.support.v7.app.AlertDialog {
+
+        protected AlertBox(Context context) {
+            super(context);
+
         }
     }
 

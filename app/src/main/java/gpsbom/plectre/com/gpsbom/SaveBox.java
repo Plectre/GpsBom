@@ -2,6 +2,7 @@ package gpsbom.plectre.com.gpsbom;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -23,13 +24,13 @@ public class SaveBox extends Dialog implements android.view.View.OnClickListener
     public EditText edText;
     public Boolean receptData = false;
     private String fichierName;
+    private Context context;
 
 
     public SaveBox(Activity a) {
         super(a);
         this.c = a;
     }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,10 +72,9 @@ public class SaveBox extends Dialog implements android.view.View.OnClickListener
     public void edTexSaveOK(View v) {
         fichierName = String.valueOf(edText.getText());
         // Vérification des fichiers d'enregistrement
-        SaveFiles saveDirectory = new SaveFiles();
+        SaveFiles saveDirectory = new SaveFiles(getContext(), c);
         saveDirectory.testCarteSd(fichierName);
-        dismiss();
         receptData = true;
+        dismiss();
     }
-
 }

@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
         btn_noir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                pointNoir(lat, lon);
+                pointNoir();
                 Toast.makeText(MainActivity.this, "Point noir enregistré", Toast.LENGTH_SHORT).show();
             }
         });
@@ -132,28 +132,28 @@ public class MainActivity extends AppCompatActivity {
                         typeCollectte = String.valueOf(rbt_bilat.getText());
                         affichageTypeCollecte(typeCollectte);
                         //Log.i("Radio", typeCollectte);
-                        typeCollectte(typeCollectte, lat, lon);
+                        typeCollectte(typeCollectte);
                         break;
                     case R.id.radio_hlp:
                         RadioButton rbt_hlp = (RadioButton) findViewById(R.id.radio_hlp);
                         typeCollectte = String.valueOf(rbt_hlp.getText());
                         affichageTypeCollecte(typeCollectte);
                         //Log.i("Radio", typeCollectte);
-                        typeCollectte(typeCollectte, lat, lon);
+                        typeCollectte(typeCollectte);
                         break;
                     case R.id.radio_m_a:
                         RadioButton rbt_ma = (RadioButton) findViewById(R.id.radio_m_a);
                         typeCollectte = String.valueOf(rbt_ma.getText());
                         affichageTypeCollecte(typeCollectte);
                         //Log.i("Radio", typeCollectte);
-                        typeCollectte(typeCollectte, lat, lon);
+                        typeCollectte(typeCollectte);
                         break;
                     case R.id.radio_ulat:
                         RadioButton rbt_ulat = (RadioButton) findViewById(R.id.radio_ulat);
                         typeCollectte = String.valueOf(rbt_ulat.getText());
                         affichageTypeCollecte(typeCollectte);
                         //Log.i("Radio", typeCollectte);
-                        typeCollectte(typeCollectte, lat, lon);
+                        typeCollectte(typeCollectte);
 
                         break;
                     default:
@@ -166,14 +166,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // Appel fonction d'enregistrement des coordonnées
-    public void typeCollectte(String pTypeCollecte, String lat, String lon) {
-
+    public void typeCollectte(String pTypeCollecte) {
         KmlFactory kmlFactory = new KmlFactory();
         kmlFactory.setKml(pTypeCollecte, lat, lon);
     }
 
     // Appel fonction point noir
-    public void pointNoir(String lat, String lon) {
+    public void pointNoir() {
         KmlFactory kmlFactory = new KmlFactory();
         kmlFactory.blackPoint(lat, lon);
     }
@@ -205,8 +204,8 @@ public class MainActivity extends AppCompatActivity {
     }
     // Mise à jour des affichages
     public void setLat(String pLat, String pLon, String accuracy, String bearing) {
-        String lat = pLat;
-        String lon = pLon;
+        lat = pLat;
+        lon = pLon;
 
        // txt_plot.setText("");
         txt_lon.setText(lon + "°");
