@@ -10,6 +10,9 @@ import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import gpsbom.plectre.com.gpsbom.saves.SaveBox;
+import gpsbom.plectre.com.gpsbom.saves.SaveFiles;
+
 /**
  * Activitée Launcher
  * Instanciaion des Views et appel des méthodes de démarrage du GPS

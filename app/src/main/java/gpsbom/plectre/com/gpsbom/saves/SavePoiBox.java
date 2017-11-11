@@ -1,14 +1,17 @@
-package gpsbom.plectre.com.gpsbom;
+package gpsbom.plectre.com.gpsbom.saves;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import gpsbom.plectre.com.gpsbom.R;
+import gpsbom.plectre.com.gpsbom.saves.SaveFiles;
 
 
 /**
@@ -16,29 +19,30 @@ import android.widget.Toast;
  */
 
 
-public class SaveBox extends Dialog implements android.view.View.OnClickListener {
+public class SavePoiBox extends Dialog implements View.OnClickListener {
 
     public Activity c;
     public Dialog d;
     public Button save, cancel;
-    public EditText edText;
+    public EditText edTextName;
+    public EditText edDescription;
     public Boolean receptData = false;
     private String fichierName;
-    private Context context;
 
-
-    public SaveBox(Activity a) {
-        super(a);
-        this.c = a;
+    public SavePoiBox(@NonNull Activity activity) {
+        super(activity);
+        this.c = activity;
     }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.save_layout);
+        setContentView(R.layout.save_poi_layout);
         save = (Button) findViewById(R.id.btn_saveFichierName);
         cancel = (Button) findViewById(R.id.btn_cancel);
-        edText = (EditText) findViewById(R.id.etSave);
+        edTextName = (EditText) findViewById(R.id.ed_name);
+        edDescription = (EditText) findViewById(R.id.ed_description);
         save.setOnClickListener(this);
         cancel.setOnClickListener(this);
     }
@@ -49,7 +53,7 @@ public class SaveBox extends Dialog implements android.view.View.OnClickListener
         switch (v.getId()) {
             case R.id.btn_saveFichierName:
                 // Test si le champs est rempli
-                if (edText.getText().toString().equals("")) {
+                if (edTextName.getText().toString().equals("")) {
                     dialogIsEmpty();
                 } else {
                     edTexSaveOK(v);
@@ -65,16 +69,17 @@ public class SaveBox extends Dialog implements android.view.View.OnClickListener
     }
 
     public void dialogIsEmpty() {
-        Toast.makeText(getContext(), "Merci de nommer le fichier ...", Toast.LENGTH_LONG).show();
+        Toast.makeText(getContext(), "Merci de nommer le service ...", Toast.LENGTH_LONG).show();
     }
 
     // Methode céation fichier
     public void edTexSaveOK(View v) {
-        fichierName = String.valueOf(edText.getText());
+        fichierName = String.valueOf(edTextName.getText());
         // Vérification des fichiers d'enregistrement
-        SaveFiles saveDirectory = new SaveFiles(getContext(), c);
+        SaveFiles saveDirectory = new SaveFiles();
         saveDirectory.testCarteSd(fichierName);
-        receptData = true;
         dismiss();
+        receptData = true;
     }
+
 }

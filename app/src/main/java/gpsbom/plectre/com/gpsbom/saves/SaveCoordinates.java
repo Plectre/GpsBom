@@ -1,9 +1,12 @@
-package gpsbom.plectre.com.gpsbom;
+package gpsbom.plectre.com.gpsbom.saves;
 
 import android.util.Log;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+
+import gpsbom.plectre.com.gpsbom.MainActivity;
+import gpsbom.plectre.com.gpsbom.saves.SaveFiles;
 
 /**
  * Created by plectre on 31/03/17.
@@ -11,7 +14,7 @@ import java.io.IOException;
  * et appellé par MyReciever
  **/
 
-public class SaveCoordinates extends MainActivity{
+public class SaveCoordinates extends MainActivity {
     private String fName;
     private String tCollecte; // type de collecte par defaut au demarrage
     private String path;

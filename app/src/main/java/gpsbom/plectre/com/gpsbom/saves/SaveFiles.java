@@ -1,6 +1,7 @@
-package gpsbom.plectre.com.gpsbom;
+package gpsbom.plectre.com.gpsbom.saves;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,6 +14,10 @@ import android.widget.Toast;
 
 import java.io.File;
 import java.io.IOException;
+
+import gpsbom.plectre.com.gpsbom.KmlFactory;
+import gpsbom.plectre.com.gpsbom.LauncherActivity;
+import gpsbom.plectre.com.gpsbom.R;
 
 
 /**
@@ -92,12 +97,14 @@ public class SaveFiles  {
         // Creation du fichier .kml
         fichier = new File(fFilePath + "/" + pName + ".kml");
         if (fichier.exists()) {
+            Dialog dialog = new Dialog(context);
+
 
             // Ouverture d'une alertDialog si le fichier existe déjà
             AlertBox alertBox = new AlertBox(context);
-            alertBox.setTitle("Warning ! ");
-            alertBox.setMessage("Le fichier existe déjà !");
-            alertBox.setButton(AlertDialog.BUTTON_NEUTRAL, "CANCEL",
+            alertBox.setTitle(" !! Attention !! ");
+            alertBox.setMessage("Le "+pName+" existe déjà !. Il ne peut pas y avoir de doublons !");
+            alertBox.setButton(AlertDialog.BUTTON_NEUTRAL, String.valueOf(context.getResources().getString(R.string.annuler)),
                     new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {

@@ -8,6 +8,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import gpsbom.plectre.com.gpsbom.saves.SaveFiles;
+
 /**
  * Created by plectre on 04/04/17.
  * Classe se chargeant de construire la syntaxe Kml

@@ -4,6 +4,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
+import gpsbom.plectre.com.gpsbom.saves.SaveCoordinates;
+import gpsbom.plectre.com.gpsbom.saves.SaveFiles;
+
 /**
  * Created by plectre on 09/03/17.
  * Classe etendue de BroadcastReceiver qui récupére les positions et

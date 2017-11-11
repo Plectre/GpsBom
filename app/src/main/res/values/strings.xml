@@ -18,4 +18,5 @@
     <string name="recording">! . Recording . !</string>
     <string name="cap">Cap: </string>
     <string name="precision">Precision:</string>
+    <string name ="annuler">ANNULER</string>
 </resources>
