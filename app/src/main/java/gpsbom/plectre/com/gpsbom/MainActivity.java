@@ -1,10 +1,12 @@
 package gpsbom.plectre.com.gpsbom;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -83,14 +85,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // On stoppe l'enregistrement
-                recIsOn = false;
-//                CloseApp close = new CloseApp(MainActivity.this);
-//                close.show();
-
-                // On ferme le fichier kml en appelant le footer
-                stopTracking();
-                stopGpsService();
-                finish();
+                    alertBox();
             }
         });
 
@@ -202,12 +197,13 @@ public class MainActivity extends AppCompatActivity {
         txt_plot.setText("");
 
     }
+
     // Mise à jour des affichages
     public void setLat(String pLat, String pLon, String accuracy, String bearing) {
         lat = pLat;
         lon = pLon;
 
-       // txt_plot.setText("");
+        // txt_plot.setText("");
         txt_lon.setText(lon + "°");
         txt_lat.setText(lat + "°");
         txt_accuracy.setText("Precision: " + accuracy + " m");
@@ -247,4 +243,34 @@ public class MainActivity extends AppCompatActivity {
         txt_typeDeCollecte.setTextColor(Color.rgb(0, 0, 0));
         txt_typeDeCollecte.setText(typeCollecte);
     }
+
+    public void alertBox() {
+    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.alert_title).setMessage(R.string.alert_message);
+        builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+            }
+        })
+                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                       closeApp();
+                    }
+                });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private void closeApp() {
+
+        recIsOn = false;
+
+        // On ferme le fichier kml en appelant le footer
+        stopTracking();
+        stopGpsService(); // Desabonement du service gps
+        finish(); // fermeture de l'application
+    }
+
 }

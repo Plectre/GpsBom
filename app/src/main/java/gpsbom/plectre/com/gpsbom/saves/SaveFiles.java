@@ -97,8 +97,7 @@ public class SaveFiles  {
         // Creation du fichier .kml
         fichier = new File(fFilePath + "/" + pName + ".kml");
         if (fichier.exists()) {
-            Dialog dialog = new Dialog(context);
-
+            //Dialog dialog = new Dialog(context);
 
             // Ouverture d'une alertDialog si le fichier existe déjà
             AlertBox alertBox = new AlertBox(context);

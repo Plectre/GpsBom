@@ -19,4 +19,8 @@
     <string name="cap">Cap: </string>
     <string name="precision">Precision:</string>
     <string name ="annuler">ANNULER</string>
+    <string name="alert_message">Suivi de collecte terminé ?</string>
+    <string name="alert_title">Arrêter le suivi</string>
+    <string name="no">NON</string>
+    <string name="yes">OUI</string>
 </resources>
