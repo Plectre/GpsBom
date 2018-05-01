@@ -34,7 +34,7 @@ public class CloseApp extends Dialog implements android.view.View.OnClickListene
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_fermer:
-                return;
+                break;
             case R.id.btn_annuler:
                 dismiss();
                 break;

@@ -34,7 +34,7 @@ public class LauncherActivity extends AppCompatActivity {
     private SeekBar sb_time;
     private TextView txt_titre;
 
-    private long updateTime;
+    //private long updateTime;
     private float updateLocation;
 
     @Override
@@ -49,9 +49,9 @@ public class LauncherActivity extends AppCompatActivity {
         txt_titre = (TextView) findViewById(R.id.txt_titre);
         txt_status_gps = (TextView) findViewById(R.id.txt_gps_status);
         txt_location = (TextView) findViewById(R.id.txt_location);
-        txt_time = (TextView) findViewById(R.id.txt_time);
+        //txt_time = (TextView) findViewById(R.id.txt_time);
         sb_location = (SeekBar) findViewById(R.id.sb_location);
-        sb_time = (SeekBar) findViewById(R.id.sb_time);
+        //sb_time = (SeekBar) findViewById(R.id.sb_time);
 
         init();
 
@@ -75,7 +75,8 @@ public class LauncherActivity extends AppCompatActivity {
             }
         });
         // Manipulation SeekBar time
-        sb_time.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+ /**       sb_time.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 // Pas de 0.5 soit 1/2 seconde
@@ -95,7 +96,7 @@ public class LauncherActivity extends AppCompatActivity {
 
             }
         });
-
+**/
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -123,7 +124,7 @@ public class LauncherActivity extends AppCompatActivity {
                 txt_status_gps.setText(R.string.status_gps);
                 btnSave.setVisibility(View.INVISIBLE);
                 btn_find_position.setEnabled(false);
-                sb_time.setEnabled(false);
+                //sb_time.setEnabled(false);
                 sb_location.setEnabled(false);
             }
         });
@@ -134,12 +135,8 @@ public class LauncherActivity extends AppCompatActivity {
     protected void onStart() {
         Log.e("Launcher onStart", String.valueOf(fileCreate));
         super.onStart();
-
-
         Log.i("Launcher on start", String.valueOf(fileCreate));
-
         coordOk();
-        //txt_status_gps.setText(status_coord);
     }
 
     public void StartGps() {
@@ -152,12 +149,10 @@ public class LauncherActivity extends AppCompatActivity {
         GpsService gpsService = new GpsService();
         signal = gpsService.getIscoorOk();
         Intent intent = new Intent(this, GpsService.class);
-        intent.putExtra("update_time", updateTime);
+        //intent.putExtra("update_time", updateTime);
         intent.putExtra("update_location", updateLocation);
 
         startService(intent);
-        //startService(servicenew Intent(LauncherActivity.this, GpsService.class));
-
 
     }
 
@@ -209,6 +204,6 @@ public class LauncherActivity extends AppCompatActivity {
         btn_find_position.setVisibility(View.INVISIBLE);
         txt_titre.setText(R.string.app_name);
         txt_location.setText("0");
-        txt_time.setText("0");
+        //txt_time.setText("0");
     }
 }

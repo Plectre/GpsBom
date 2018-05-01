@@ -6,8 +6,10 @@
             <size
                 android:height="20dp"
                 android:width="20dp" />
-            <solid android:color="@color/colorAccent" />
+            <solid android:color="@color/colorButton" />
             <corners android:radius="@dimen/cornerRound" />
+            <stroke android:width="2dp"/>
+            <stroke android:color="@color/colorAccent"/>
         </shape>
     </item>
     <item android:drawable="@color/colorButton" />

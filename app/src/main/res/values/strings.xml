@@ -6,9 +6,9 @@
     <string name="recherche_position">Synchroniser position</string>
     <string name="btn_annuler">CANCEL</string>
     <string name="haut_le_pieds">HLP</string>
-    <string name="uni_lateral_droit">U-LAT</string>
-    <string name="bi_lateral">BI-LAT</string>
-    <string name="marche_arriere">M-A</string>
+    <string name="uni_lateral_droit">ULD</string>
+    <string name="bi_lateral">BL</string>
+    <string name="marche_arriere">MA</string>
     <string name="init_status_gps">BOM GPS</string>
     <string name="tirets">---</string>
     <string name="stop">Stop</string>

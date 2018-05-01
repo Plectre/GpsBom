@@ -1,7 +1,9 @@
 package gpsbom.plectre.com.gpsbom;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
+import android.os.Build;
 import android.util.Log;
 
 import java.io.File;
@@ -15,6 +17,7 @@ import gpsbom.plectre.com.gpsbom.saves.SaveFiles;
  * Classe se chargeant de construire la syntaxe Kml
  */
 
+@TargetApi(Build.VERSION_CODES.KITKAT)
 public class KmlFactory extends Activity {
     public Context context;
     private String fName;
@@ -38,7 +41,7 @@ public class KmlFactory extends Activity {
                 + "<name>" +DEBUT+"</name>" + NEW_LINE
                 + "<Point>" + NEW_LINE
                 + "<coordinates>" + NEW_LINE
-                + lon + "," +lat + NEW_LINE
+                + lon + "," + lat + NEW_LINE
                 + "</coordinates>" + NEW_LINE
                 + "</Point>" + NEW_LINE
                 + "</Placemark>" + NEW_LINE

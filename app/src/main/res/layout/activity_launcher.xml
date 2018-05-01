@@ -43,7 +43,7 @@
                     android:layout_weight="1"
                     android:text="@string/delta_metre"
                     android:textAlignment="center" />
-
+<!--
                 <TextView
                     android:id="@+id/textView4"
                     android:layout_width="wrap_content"
@@ -51,6 +51,7 @@
                     android:layout_weight="1"
                     android:text="@string/delta_seconde"
                     android:textAlignment="center" />
+-->
             </LinearLayout>
 
             <LinearLayout
@@ -64,15 +65,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.1"
-                    android:textAlignment="center" />
-
+                    android:textAlignment="center"
+                    android:text="0"
+                    android:textSize="45sp" />
+<!--
                 <TextView
                     android:id="@+id/txt_time"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.1"
                     android:textAlignment="center" />
-
+-->
             </LinearLayout>
 
             <LinearLayout
@@ -91,7 +94,7 @@
                     android:max="25"
                     android:padding="@dimen/cornerRound"
                     android:thumb="@drawable/custom_seekbar" />
-
+<!--
                 <SeekBar
                     android:id="@+id/sb_time"
                     android:layout_width="match_parent"
@@ -100,7 +103,7 @@
                     android:max="30"
                     android:padding="@dimen/padding"
                     android:thumb="@drawable/custom_seekbar" />
-
+-->
             </LinearLayout>
 
         </LinearLayout>

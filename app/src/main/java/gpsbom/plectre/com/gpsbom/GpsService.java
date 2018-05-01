@@ -30,8 +30,11 @@ public class GpsService extends Service {
     private LocationManager locationMgr = null;
 
     private Boolean firstCoorInbound = true;
-    private String str_accuracy;
     private String str_bearing;
+
+    private int currentStep = 0;
+    private int oldStep;
+    private float locationUpdate;
 
 
     private double latitude;
@@ -73,8 +76,30 @@ public class GpsService extends Service {
 
 
     private LocationListener onLocationChange = new LocationListener() {
+
         @Override
         public void onLocationChanged(Location location) {
+
+            // Segmentatation des lines pour Arcmap
+            final float ARCMAP_RANGE = 1000;
+            // Test du seekbar des step de plot de coordonnées
+            if (locationUpdate <= 0) {
+                locationUpdate = 1;
+            }
+
+            Log.e("LocationUpdate", String.valueOf(locationUpdate));
+            float newStep = oldStep + (ARCMAP_RANGE / locationUpdate);
+            currentStep += 1;
+            Log.e("currentStep", String.valueOf(currentStep));
+            Log.e("newStep", String.valueOf(newStep));
+            if (currentStep >= newStep) {
+                Log.e("Step", String.valueOf(newStep));
+                oldStep = currentStep;
+                MainActivity ma = new MainActivity();
+                String typeDeCollecte = ma.typeCollectte;
+                sendToSave(typeDeCollecte);
+            }
+
             latitude = location.getLatitude();
             longitude = location.getLongitude();
 
@@ -112,6 +137,12 @@ public class GpsService extends Service {
             intent.putExtra("bearing", str_bearing);
 
             sendBroadcast(intent);
+        }
+
+        // Methode appelée par onLocationChanged si le step entre deux points et depassé
+        private void sendToSave(String typeDeCollecte) {
+            KmlFactory kmlFactory = new KmlFactory();
+            kmlFactory.setKml(typeDeCollecte, String.valueOf(latitude), String.valueOf(longitude));
         }
 
         @Override
@@ -173,11 +204,10 @@ public class GpsService extends Service {
         if (intent != null) {
             time_update_gps = intent.getLongExtra("update_time", 1500);
             location_update_gps = intent.getFloatExtra("update_location", 3);
-            //Log.i("time update", String.valueOf(time_update_gps));
-            //Log.i("location update", String.valueOf(location_update_gps));
 
             // Appel abonement gps
-            abonementGps(time_update_gps, location_update_gps);
+            abonementGps(0, location_update_gps);
+            locationUpdate = location_update_gps;
         }
         return super.onStartCommand(intent, flags, startId);
     }
@@ -245,9 +275,12 @@ public class GpsService extends Service {
 
         return str_bearing;
     }
-    /** ---------------------------------
-    * ------------- GETTERS -------------
-    * -----------------------------------*/
+
+    /**
+     * ---------------------------------
+     * ------------- GETTERS -------------
+     * -----------------------------------
+     */
 
     public double getLatitude() {
         return latitude;

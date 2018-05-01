@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     public static String lat;
     public static String lon;
     public static boolean recIsOn = false;
-    protected String typeCollectte = "HLP";
+    public String typeCollectte = "HLP";
     protected ImageView img_sat;
     private Animation fadeAnim;
 
@@ -111,7 +111,11 @@ public class MainActivity extends AppCompatActivity {
         // Demarrer Fade Animation
         txt_typeDeCollecte.startAnimation(fadeAnim);
     }
-
+    @Override
+    protected void onDestroy() {
+        finish();
+        super.onDestroy();
+    }
     // Methode qui ecoute si on a un changement d'état du radioGroup
     protected void onRadioGroupChange() {
 
@@ -152,7 +156,6 @@ public class MainActivity extends AppCompatActivity {
 
                         break;
                     default:
-                        //Log.i("Default", "");
                         break;
                 }
             }
