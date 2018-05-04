@@ -6,5 +6,6 @@
     <dimen name="padding">10dp</dimen>
     <dimen name = "padding_radio">5dp</dimen>
     <dimen name ="cornerRound">20dp</dimen>
+    <dimen name="textView">25sp</dimen>
 
 </resources>

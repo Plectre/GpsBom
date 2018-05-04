@@ -1,8 +1,10 @@
 package gpsbom.plectre.com.gpsbom;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -26,12 +28,12 @@ public class LauncherActivity extends AppCompatActivity {
     private Boolean fileOk;
     private TextView txt_status_gps;
     private TextView txt_location;
-    private TextView txt_time;
+    //private TextView txt_time;
     private Boolean fileCreate = false;
     private Button btnSave;
     private Button btn_find_position;
     private SeekBar sb_location;
-    private SeekBar sb_time;
+    //private SeekBar sb_time;
     private TextView txt_titre;
 
     //private long updateTime;
@@ -41,9 +43,10 @@ public class LauncherActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launcher);
+
         // Vérouillage de la vue en position portrait
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
+        // Initialisation des views
         btnSave = (Button) findViewById(R.id.btn_save);
         btn_find_position = (Button) findViewById(R.id.btn_fin_position);
         txt_titre = (TextView) findViewById(R.id.txt_titre);
@@ -60,7 +63,9 @@ public class LauncherActivity extends AppCompatActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 updateLocation = (float) progress;
-                txt_location.setText(String.valueOf(progress));
+                // Récupération de la string formatée dans R.string
+                // string>%progress km/h</string>
+                txt_location.setText(getString(R.string.concat_km_h, progress));
             }
 
 
@@ -76,31 +81,30 @@ public class LauncherActivity extends AppCompatActivity {
         });
         // Manipulation SeekBar time
 
- /**       sb_time.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                // Pas de 0.5 soit 1/2 seconde
-                updateTime = (long) progress * 500;
-                float prog = (float) progress / 2;
-                txt_time.setText(String.valueOf(prog));
+        /**       sb_time.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        @Override public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+        // Pas de 0.5 soit 1/2 seconde
+        updateTime = (long) progress * 500;
+        float prog = (float) progress / 2;
+        txt_time.setText(String.valueOf(prog));
 
-            }
+        }
 
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
+        @Override public void onStartTrackingTouch(SeekBar seekBar) {
 
-            }
+        }
 
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
+        @Override public void onStopTrackingTouch(SeekBar seekBar) {
 
-            }
+        }
         });
-**/
+         **/
+
+        // Appel de la boite de dialogue sauvegarde
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // appel de la boite de dialogue sauvgarde
+
                 SaveBox sBox = new SaveBox(LauncherActivity.this);
                 sBox.show();
                 btn_find_position.setVisibility(View.VISIBLE);
@@ -149,9 +153,8 @@ public class LauncherActivity extends AppCompatActivity {
         GpsService gpsService = new GpsService();
         signal = gpsService.getIscoorOk();
         Intent intent = new Intent(this, GpsService.class);
-        //intent.putExtra("update_time", updateTime);
+        //intent de a vitesse de collecte
         intent.putExtra("update_location", updateLocation);
-
         startService(intent);
 
     }
@@ -196,6 +199,12 @@ public class LauncherActivity extends AppCompatActivity {
             return status_coord = "Position en cours d'acquisition ...";
         }
         return status_coord;
+    }
+
+    public void vibrator() {
+        Log.i("vibrator", "VIBRATOR");
+        Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        v.vibrate(1000);
     }
 
     public void init() {

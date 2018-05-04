@@ -11,12 +11,11 @@ import android.location.LocationManager;
 import android.location.LocationProvider;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.os.Vibrator;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.widget.Toast;
-
-import java.text.DecimalFormat;
 
 /**
  * Created by plectre on 08/03/17.
@@ -34,7 +33,7 @@ public class GpsService extends Service {
 
     private int currentStep = 0;
     private int oldStep;
-    private float locationUpdate;
+    private float vitesseDeCollecte;
 
 
     private double latitude;
@@ -80,15 +79,13 @@ public class GpsService extends Service {
         @Override
         public void onLocationChanged(Location location) {
 
-            // Segmentatation des lines pour Arcmap
-            final float ARCMAP_RANGE = 1000;
             // Test du seekbar des step de plot de coordonnées
-            if (locationUpdate <= 0) {
-                locationUpdate = 1;
+            if (vitesseDeCollecte <= 0) {
+                vitesseDeCollecte = 1;
             }
 
-            Log.e("LocationUpdate", String.valueOf(locationUpdate));
-            float newStep = oldStep + (ARCMAP_RANGE / locationUpdate);
+            Log.e("LocationUpdate", String.valueOf(vitesseDeCollecte));
+            float newStep = oldStep + vitesseDeCollecte;
             currentStep += 1;
             Log.e("currentStep", String.valueOf(currentStep));
             Log.e("newStep", String.valueOf(newStep));
@@ -130,7 +127,6 @@ public class GpsService extends Service {
             String str_accuracy = String.valueOf(intAccuracy);
             // Appel methode pour formatage du cap pour affichage...
             str_bearing = formatBearing(bearing);
-
             intent.putExtra("lat", str_lat);
             intent.putExtra("lon", str_lon);
             intent.putExtra("accuracy", str_accuracy);
@@ -197,17 +193,24 @@ public class GpsService extends Service {
     // Methode appellée au demarrge du service
     public int onStartCommand(Intent intent, int flags, int startId) {
         // Récupération des données envoyées par launcherActivity
-        // Mise à jour du timeUpdate et locationUpdate
+        // Mise à jour du timeUpdate et vitesseDeCollecte
 
-        long time_update_gps;
+        final float ARCMAP_REF = 1200;
         float location_update_gps;
         if (intent != null) {
-            time_update_gps = intent.getLongExtra("update_time", 1500);
+            //time_update_gps = intent.getLongExtra("update_time", 1500);
             location_update_gps = intent.getFloatExtra("update_location", 3);
+            vitesseDeCollecte = Math.round(location_update_gps / 3.6f);
+            Log.i("vitesse de collecte", String.valueOf(vitesseDeCollecte));
+
+            // Si la vitesse de collecte n'est ps renseignée par defaut on donne 30
+            if (vitesseDeCollecte <= 0) {
+                vitesseDeCollecte = 30;
+            }
 
             // Appel abonement gps
-            abonementGps(0, location_update_gps);
-            locationUpdate = location_update_gps;
+            abonementGps(1000, vitesseDeCollecte);
+            //vitesseDeCollecte = location_update_gps;
         }
         return super.onStartCommand(intent, flags, startId);
     }
@@ -231,7 +234,6 @@ public class GpsService extends Service {
         }
 
         Log.i("APP", "Time update " + time);
-
         locationMgr.requestLocationUpdates(LocationManager.GPS_PROVIDER, time,
                 location, onLocationChange);
     }
@@ -274,19 +276,5 @@ public class GpsService extends Service {
         }
 
         return str_bearing;
-    }
-
-    /**
-     * ---------------------------------
-     * ------------- GETTERS -------------
-     * -----------------------------------
-     */
-
-    public double getLatitude() {
-        return latitude;
-    }
-
-    public double getLongitude() {
-        return longitude;
     }
 }

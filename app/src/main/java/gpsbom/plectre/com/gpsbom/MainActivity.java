@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.support.annotation.IdRes;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -42,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
     public static String lon;
     public static boolean recIsOn = false;
     public String typeCollectte = "HLP";
-    protected ImageView img_sat;
     private Animation fadeAnim;
 
 
@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // On stoppe l'enregistrement
-                    alertBox();
+                alertBox();
             }
         });
 
@@ -110,12 +110,16 @@ public class MainActivity extends AppCompatActivity {
 
         // Demarrer Fade Animation
         txt_typeDeCollecte.startAnimation(fadeAnim);
+        // Vibration au demarrage de l'activité principale
+        vibrator(250);
     }
+
     @Override
     protected void onDestroy() {
-        finish();
+        closeApp();
         super.onDestroy();
     }
+
     // Methode qui ecoute si on a un changement d'état du radioGroup
     protected void onRadioGroupChange() {
 
@@ -123,37 +127,32 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
-
+                vibrator(50);
                 switch (checkedId) {
 
                     case R.id.radio_biLat:
                         RadioButton rbt_bilat = (RadioButton) findViewById(R.id.radio_biLat);
                         typeCollectte = String.valueOf(rbt_bilat.getText());
                         affichageTypeCollecte(typeCollectte);
-                        //Log.i("Radio", typeCollectte);
                         typeCollectte(typeCollectte);
                         break;
                     case R.id.radio_hlp:
                         RadioButton rbt_hlp = (RadioButton) findViewById(R.id.radio_hlp);
                         typeCollectte = String.valueOf(rbt_hlp.getText());
                         affichageTypeCollecte(typeCollectte);
-                        //Log.i("Radio", typeCollectte);
                         typeCollectte(typeCollectte);
                         break;
                     case R.id.radio_m_a:
                         RadioButton rbt_ma = (RadioButton) findViewById(R.id.radio_m_a);
                         typeCollectte = String.valueOf(rbt_ma.getText());
                         affichageTypeCollecte(typeCollectte);
-                        //Log.i("Radio", typeCollectte);
                         typeCollectte(typeCollectte);
                         break;
                     case R.id.radio_ulat:
                         RadioButton rbt_ulat = (RadioButton) findViewById(R.id.radio_ulat);
                         typeCollectte = String.valueOf(rbt_ulat.getText());
                         affichageTypeCollecte(typeCollectte);
-                        //Log.i("Radio", typeCollectte);
                         typeCollectte(typeCollectte);
-
                         break;
                     default:
                         break;
@@ -228,11 +227,8 @@ public class MainActivity extends AppCompatActivity {
         if (recIsOn) {
             btn_rec.setText("PAUSE");
             Log.e(String.valueOf(recIsOn), "REC IS ON");
-            //img_sat.clearAnimation();
             gpsStatus = "!... Tracking en cours ...!";
             txt_typeDeCollecte.clearAnimation();
-
-
         } else {
             btn_rec.setText("REC");
             Log.e(String.valueOf(recIsOn), "REC IS OFF");
@@ -248,18 +244,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void alertBox() {
-    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.alert_title).setMessage(R.string.alert_message);
         builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
+                dialog.dismiss();
             }
         })
                 .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                       closeApp();
+                        closeApp();
                     }
                 });
         AlertDialog dialog = builder.create();
@@ -274,6 +270,13 @@ public class MainActivity extends AppCompatActivity {
         stopTracking();
         stopGpsService(); // Desabonement du service gps
         finish(); // fermeture de l'application
+    }
+
+
+    // VIBRATOR
+    public void vibrator(long tmps) {
+        Vibrator v = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+        v.vibrate(tmps);
     }
 
 }

@@ -13,7 +13,8 @@
     <string name="tirets">---</string>
     <string name="stop">Stop</string>
     <string name="record">Rec</string>
-    <string name="delta_metre">Distance métre</string>
+    <string name="km_h">KM/H</string>
+    <string name="concat_km_h">%d km/h</string>
     <string name="delta_seconde">Temps seconde</string>
     <string name="recording">! . Recording . !</string>
     <string name="cap">Cap: </string>
