@@ -99,6 +99,7 @@ public class KmlFactory extends Activity {
                 + "</Document>" + NEW_LINE
                 + "</kml>";
         saveKml(footer);
+        Log.e("FOOTEERRR" , "appel footer");
     }
 
     // Header Points
@@ -121,6 +122,7 @@ public class KmlFactory extends Activity {
                 + "<coordinates>" + NEW_LINE
                 + lon + "," +lat + NEW_LINE
                 + "</coordinates>" + NEW_LINE
+
                 + "</Point>" + NEW_LINE
                 + "</Placemark>";
         saveKmlPoints(blackPoint);
@@ -134,7 +136,8 @@ public class KmlFactory extends Activity {
     }
 
     // On recupere nom du dossier créer dans la classe SaveFile()
-    public void getDirPath() {
+    public void
+    getDirPath() {
         SaveFiles sf = new SaveFiles();
         //this.fDossier = sf.getFilePath();
         this.fName = sf.getfName();

@@ -62,10 +62,12 @@ public class LauncherActivity extends AppCompatActivity {
         sb_location.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                updateLocation = (float) progress;
+                float minSeekValue = 30; // Valeur minimum de la seekBar
+                updateLocation = (float) progress + minSeekValue;
                 // Récupération de la string formatée dans R.string
                 // string>%progress km/h</string>
-                txt_location.setText(getString(R.string.concat_km_h, progress));
+                typeDeCircuit(progress);
+                //txt_location.setText(getString(R.string.concat_km_h, progress));
             }
 
 
@@ -212,7 +214,21 @@ public class LauncherActivity extends AppCompatActivity {
         txt_status_gps.setText(status_coord);
         btn_find_position.setVisibility(View.INVISIBLE);
         txt_titre.setText(R.string.app_name);
-        txt_location.setText("0");
+        txt_location.setText(R.string.hyper_urbain);
         //txt_time.setText("0");
+    }
+
+    public void typeDeCircuit(int i) {
+        if (i >= 0 && i <= 12) {
+            txt_location.setText(R.string.hyper_urbain);
+        } else if (i > 12 && i <= 24) {
+            txt_location.setText(R.string.urbain);
+        } else if (i > 24 && i <= 36) {
+            txt_location.setText(R.string.rural);
+        } else if (i > 36) {
+            txt_location.setText(R.string.hyper_rural);
+        } else {
+            txt_location.setText("Type de circuit");
+        }
     }
 }

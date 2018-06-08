@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_margin="@dimen/margin"
-            android:text="Precision:"
+            android:text="@string/precision"
             android:textAlignment="center"
             android:textSize="@dimen/h2" />
 
@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin"
             android:layout_weight="1"
-            android:text="Cap:"
+            android:text="@string/cap"
             android:textAlignment="center"
             android:textSize="@dimen/h2" />
     </LinearLayout>
@@ -126,7 +126,6 @@
             android:id="@+id/txt_plot"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:textAlignment="center"
             android:textSize="@dimen/h2" />
 
@@ -146,7 +145,7 @@
             android:layout_gravity="bottom|center_horizontal"
             android:background="@drawable/custom_button"
             android:elevation="16dp"
-            android:text="poi"
+            android:text="@string/poi"
             android:textAlignment="center"
             android:textColor="@color/btnPointNoir" />
 

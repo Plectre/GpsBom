@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -42,7 +41,8 @@ public class MainActivity extends AppCompatActivity {
     public static String lat;
     public static String lon;
     public static boolean recIsOn = false;
-    public String typeCollectte = "HLP";
+    public static String typeCollectte = "HLP";
+    private String typeOfCollect;
     private Animation fadeAnim;
 
 
@@ -78,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 enregistrementPositions();
                 AfficheGpsStatus(gpsStatus);
+                vibrator(100);
             }
         });
 
@@ -86,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // On stoppe l'enregistrement
                 alertBox();
+                vibrator(100);
             }
         });
 
@@ -94,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 pointNoir();
                 Toast.makeText(MainActivity.this, "Point noir enregistré", Toast.LENGTH_SHORT).show();
+                vibrator(100);
             }
         });
 
@@ -127,32 +130,32 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
-                vibrator(50);
+                vibrator(25);
                 switch (checkedId) {
 
                     case R.id.radio_biLat:
                         RadioButton rbt_bilat = (RadioButton) findViewById(R.id.radio_biLat);
                         typeCollectte = String.valueOf(rbt_bilat.getText());
                         affichageTypeCollecte(typeCollectte);
-                        typeCollectte(typeCollectte);
+                        ftypeCollectte(typeCollectte);
                         break;
                     case R.id.radio_hlp:
                         RadioButton rbt_hlp = (RadioButton) findViewById(R.id.radio_hlp);
                         typeCollectte = String.valueOf(rbt_hlp.getText());
                         affichageTypeCollecte(typeCollectte);
-                        typeCollectte(typeCollectte);
+                        ftypeCollectte(typeCollectte);
                         break;
                     case R.id.radio_m_a:
                         RadioButton rbt_ma = (RadioButton) findViewById(R.id.radio_m_a);
                         typeCollectte = String.valueOf(rbt_ma.getText());
                         affichageTypeCollecte(typeCollectte);
-                        typeCollectte(typeCollectte);
+                        ftypeCollectte(typeCollectte);
                         break;
                     case R.id.radio_ulat:
                         RadioButton rbt_ulat = (RadioButton) findViewById(R.id.radio_ulat);
                         typeCollectte = String.valueOf(rbt_ulat.getText());
                         affichageTypeCollecte(typeCollectte);
-                        typeCollectte(typeCollectte);
+                        ftypeCollectte(typeCollectte);
                         break;
                     default:
                         break;
@@ -163,7 +166,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // Appel fonction d'enregistrement des coordonnées
-    public void typeCollectte(String pTypeCollecte) {
+    public void ftypeCollectte(String pTypeCollecte) {
         KmlFactory kmlFactory = new KmlFactory();
         kmlFactory.setKml(pTypeCollecte, lat, lon);
     }
@@ -182,7 +185,7 @@ public class MainActivity extends AppCompatActivity {
             rd_group.getChildAt(i).setEnabled(false);
         }
 
-        // Sauvegarde du footer kmlFactory
+        // Sauvegarde du footer kmlFactory 
         KmlFactory kmlFactory = new KmlFactory();
         kmlFactory.footerKml(lat, lon);
         // Fermeture du fichier point
@@ -277,6 +280,11 @@ public class MainActivity extends AppCompatActivity {
     public void vibrator(long tmps) {
         Vibrator v = (Vibrator) getSystemService(VIBRATOR_SERVICE);
         v.vibrate(tmps);
+    }
+
+    public String getTypeOfCollect() {
+        String typeOfCollect = typeCollectte;
+        return typeOfCollect;
     }
 
 }

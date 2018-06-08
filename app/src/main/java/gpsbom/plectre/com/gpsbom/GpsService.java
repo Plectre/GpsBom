@@ -79,21 +79,25 @@ public class GpsService extends Service {
         @Override
         public void onLocationChanged(Location location) {
 
+
             // Test du seekbar des step de plot de coordonnées
             if (vitesseDeCollecte <= 0) {
-                vitesseDeCollecte = 1;
+                vitesseDeCollecte = 30; // Valeur minimum de la seekBar
             }
 
-            Log.e("LocationUpdate", String.valueOf(vitesseDeCollecte));
+            //Log.e("LocationUpdate", String.valueOf(vitesseDeCollecte));
             float newStep = oldStep + vitesseDeCollecte;
             currentStep += 1;
-            Log.e("currentStep", String.valueOf(currentStep));
-            Log.e("newStep", String.valueOf(newStep));
-            if (currentStep >= newStep) {
-                Log.e("Step", String.valueOf(newStep));
+            //Log.e("currentStep", String.valueOf(currentStep));
+            //Log.e("newStep", String.valueOf(newStep));
+            MainActivity ma = new MainActivity();
+            if (currentStep >= newStep && ma.recIsOn == true) {
+                //Log.e("Step", String.valueOf(newStep));
                 oldStep = currentStep;
-                MainActivity ma = new MainActivity();
+
                 String typeDeCollecte = ma.typeCollectte;
+                String typeOfCollect = ma.getTypeOfCollect();
+                Log.i("Type", typeOfCollect);
                 sendToSave(typeDeCollecte);
             }
 
@@ -190,7 +194,7 @@ public class GpsService extends Service {
         locationMgr.removeUpdates(onLocationChange);
     }
 
-    // Methode appellée au demarrge du service
+    // Methode appellée au demarrage du service
     public int onStartCommand(Intent intent, int flags, int startId) {
         // Récupération des données envoyées par launcherActivity
         // Mise à jour du timeUpdate et vitesseDeCollecte
@@ -201,9 +205,10 @@ public class GpsService extends Service {
             //time_update_gps = intent.getLongExtra("update_time", 1500);
             location_update_gps = intent.getFloatExtra("update_location", 3);
             vitesseDeCollecte = Math.round(location_update_gps / 3.6f);
-            Log.i("vitesse de collecte", String.valueOf(vitesseDeCollecte));
+            Log.i("LOCATIONUPDATE", String.valueOf(location_update_gps));
+            Log.i("VITESSEDECOLLECTTE", String.valueOf(vitesseDeCollecte));
 
-            // Si la vitesse de collecte n'est ps renseignée par defaut on donne 30
+            // Si la vitesse de collecte n'est pas renseignée par defaut on donne 30
             if (vitesseDeCollecte <= 0) {
                 vitesseDeCollecte = 30;
             }
