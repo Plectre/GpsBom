@@ -212,9 +212,10 @@ public class GpsService extends Service {
             if (vitesseDeCollecte <= 0) {
                 vitesseDeCollecte = 30;
             }
-
-            // Appel abonement gps
-            abonementGps(1000, vitesseDeCollecte);
+            int timeToTick = Math.round(500 * vitesseDeCollecte); // set tick / vitesse de collecte
+            Log.i("TIMETOTICK", String.valueOf(timeToTick));
+            // Appel abonementGps(timer ms, distance parcourue avant update)
+            abonementGps(timeToTick, vitesseDeCollecte);
             //vitesseDeCollecte = location_update_gps;
         }
         return super.onStartCommand(intent, flags, startId);
@@ -235,7 +236,6 @@ public class GpsService extends Service {
                 && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
             return;
-
         }
 
         Log.i("APP", "Time update " + time);

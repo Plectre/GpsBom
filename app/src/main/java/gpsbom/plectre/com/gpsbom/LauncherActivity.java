@@ -3,6 +3,7 @@ package gpsbom.plectre.com.gpsbom;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.content.pm.PackageInfo;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
@@ -21,29 +22,23 @@ import gpsbom.plectre.com.gpsbom.saves.SaveFiles;
  * Demarrage de l'activitée principale si le signal du GPS est acqui
  */
 
-
 public class LauncherActivity extends AppCompatActivity {
     public String status_coord = "";
     private String signal;
     private Boolean fileOk;
     private TextView txt_status_gps;
     private TextView txt_location;
-    //private TextView txt_time;
     private Boolean fileCreate = false;
     private Button btnSave;
     private Button btn_find_position;
     private SeekBar sb_location;
-    //private SeekBar sb_time;
     private TextView txt_titre;
-
-    //private long updateTime;
     private float updateLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launcher);
-
         // Vérouillage de la vue en position portrait
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         // Initialisation des views
@@ -68,6 +63,7 @@ public class LauncherActivity extends AppCompatActivity {
                 // string>%progress km/h</string>
                 typeDeCircuit(progress);
                 //txt_location.setText(getString(R.string.concat_km_h, progress));
+                Log.d("progress bar", String.valueOf(progress));
             }
 
 

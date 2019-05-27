@@ -72,7 +72,7 @@
                     android:layout_gravity="center"
                     android:layout_weight="0.1"
                     android:animationResolution="@android:integer/status_bar_notification_info_maxnum"
-                    android:max="50"
+                    android:max="30"
                     android:padding="@dimen/cornerRound"
                     android:thumb="@drawable/custom_seekbar" />
                 <!--

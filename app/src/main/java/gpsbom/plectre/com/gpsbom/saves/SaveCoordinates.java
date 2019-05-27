@@ -54,7 +54,7 @@ public class SaveCoordinates extends MainActivity {
         try {
             FileWriter output = new FileWriter(file, true);
             output.append(pLat);
-            output.write(" , ");
+            output.write(",");
             output.append(pLon);
             output.write(NEW_LINE);
 
