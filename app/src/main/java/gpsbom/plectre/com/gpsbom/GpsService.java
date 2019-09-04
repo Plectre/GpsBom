@@ -135,6 +135,7 @@ public class GpsService extends Service {
             intent.putExtra("lon", str_lon);
             intent.putExtra("accuracy", str_accuracy);
             intent.putExtra("bearing", str_bearing);
+            intent.putExtra("float_bearing", bearing);
 
             sendBroadcast(intent);
         }

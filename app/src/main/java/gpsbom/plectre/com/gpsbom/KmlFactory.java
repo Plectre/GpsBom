@@ -25,7 +25,7 @@ public class KmlFactory extends Activity {
     private String DEBUT = "Debut";
     private String FIN = "Fin";
     private String NEW_LINE = System.lineSeparator();
-    private String kml;
+    //private String kml;
     private String pointFichierName;
 
 
@@ -60,7 +60,7 @@ public class KmlFactory extends Activity {
         // /coupures du circuit lors du changement de type de collecte
 
 
-        kml =   "</coordinates>"
+       String kml =   "</coordinates>"
                 + NEW_LINE
                 + "</LineString>"
                 + NEW_LINE

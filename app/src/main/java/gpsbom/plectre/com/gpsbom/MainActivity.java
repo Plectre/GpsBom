@@ -19,6 +19,8 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import static gpsbom.plectre.com.gpsbom.LauncherActivity.launcherActivity;
+
 /**
  * Created by Thierry ALVAREZ "Plectre" on 20/03/17.
  * Activitée principale
@@ -42,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
     public static String lon;
     public static boolean recIsOn = false;
     public static String typeCollectte = "HLP";
-    private String typeOfCollect;
     private Animation fadeAnim;
 
 
@@ -119,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        closeApp();
+        //closeApp();
         super.onDestroy();
     }
 
@@ -245,7 +246,7 @@ public class MainActivity extends AppCompatActivity {
         txt_typeDeCollecte.setTextColor(Color.rgb(0, 0, 0));
         txt_typeDeCollecte.setText(typeCollecte);
     }
-
+    // Alert box fin de collecte
     public void alertBox() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.alert_title).setMessage(R.string.alert_message);
@@ -266,9 +267,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void closeApp() {
-
+        // Appel de la methode statique pour tuer l'activity
+        launcherActivity.getInstance().finish();
         recIsOn = false;
-
         // On ferme le fichier kml en appelant le footer
         stopTracking();
         stopGpsService(); // Desabonement du service gps

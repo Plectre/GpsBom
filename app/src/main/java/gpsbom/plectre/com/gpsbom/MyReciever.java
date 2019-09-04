@@ -6,6 +6,7 @@ import android.content.Intent;
 
 import gpsbom.plectre.com.gpsbom.saves.SaveCoordinates;
 import gpsbom.plectre.com.gpsbom.saves.SaveFiles;
+import gpsbom.plectre.com.gpsbom.utils.Cap;
 
 /**
  * Created by plectre on 09/03/17.
@@ -22,6 +23,7 @@ public class MyReciever extends BroadcastReceiver {
     private String lon;
     private String accuracy;
     private String bearing;
+    private float float_bearing;
     private Boolean fileIsOk;
     private Boolean recIsOn;
 
@@ -32,7 +34,10 @@ public class MyReciever extends BroadcastReceiver {
         SaveFiles sf = new SaveFiles();
         this.fileIsOk = sf.getIsCreate();
     }
-
+    private void changeCap(){
+        Cap currentCap = new Cap();
+        currentCap.delta(float_bearing);
+    }
     // Abonnement au Broadcast
     public void onReceive(Context context, Intent intent) {
         this.recIsOn = MainActivity.recIsOn;
@@ -47,10 +52,11 @@ public class MyReciever extends BroadcastReceiver {
             this.lon = intent.getStringExtra("lon");
             this.accuracy = intent.getStringExtra("accuracy");
             this.bearing = intent.getStringExtra("bearing");
+            this.float_bearing = intent.getFloatExtra("float_bearing",0.0f);
 
 
             // Si le fichier est sauvegarder on enregistre les
-            // cocrdonnées
+            // coordonnées
             if (fileIsOk) {
 
                 //Log.i("File OK", String.valueOf(fileIsOk));

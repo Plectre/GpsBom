@@ -35,9 +35,19 @@ public class LauncherActivity extends AppCompatActivity {
     private TextView txt_titre;
     private float updateLocation;
 
+    static LauncherActivity launcherActivity;
+
+    // methode appelée par MainActivity.closeApp qui kill l'activity
+    public static LauncherActivity getInstance(){
+        return launcherActivity;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        launcherActivity = this;
+
         setContentView(R.layout.activity_launcher);
         // Vérouillage de la vue en position portrait
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -167,7 +177,7 @@ public class LauncherActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         // Stopper le service GPS
-        stopService(new Intent(LauncherActivity.this, GpsService.class));
+        //stopService(new Intent(LauncherActivity.this, GpsService.class));
     }
 
     /**
