@@ -166,7 +166,6 @@ public class MainActivity extends AppCompatActivity {
 
         });
     }
-
     // Appel fonction d'enregistrement des coordonnées
     public void ftypeCollectte(String pTypeCollecte) {
         KmlFactory kmlFactory = new KmlFactory();
