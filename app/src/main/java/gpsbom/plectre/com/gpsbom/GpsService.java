@@ -85,8 +85,8 @@ public class GpsService extends Service {
                 vitesseDeCollecte = 30; // Valeur minimum de la seekBar
             }
 
-            //Log.e("LocationUpdate", String.valueOf(vitesseDeCollecte));
-            float newStep = oldStep + (vitesseDeCollecte/2);
+            // temporisation du procahain enregistrement
+            float newStep = (oldStep + vitesseDeCollecte)/2;
             currentStep += 1;
             //Log.e("currentStep", String.valueOf(currentStep));
             //Log.e("newStep", String.valueOf(newStep));
@@ -136,7 +136,7 @@ public class GpsService extends Service {
             intent.putExtra("lon", str_lon);            // longitude
             intent.putExtra("accuracy", str_accuracy);  // Précision
             intent.putExtra("bearing", str_bearing);    // Cap pour affichage
-            //intent.putExtra("float_bearing", bearing);  // Cap
+            intent.putExtra("float_bearing", bearing);  // Cap
             Log.e("GpsService_Location Changed", str_lat);
             Log.e("GpsService_precision", str_accuracy);
             sendBroadcast(intent);
@@ -246,7 +246,7 @@ public class GpsService extends Service {
     }
 
     public String formatBearing(float bearing) {
-        //Log.i("GPS", String.valueOf(bearing));
+        Log.i("GPS", String.valueOf(bearing));
         float formatBearing = bearing;
 
         if (formatBearing == 0.0) {

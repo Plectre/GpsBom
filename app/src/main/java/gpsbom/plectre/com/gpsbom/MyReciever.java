@@ -44,9 +44,9 @@ public class MyReciever extends BroadcastReceiver {
     private void changeCap() {
         Cap currentCap = new Cap();
         boolean isCapChange = currentCap.delta(float_bearing);
+        Log.i("isCapChange", String.valueOf(isCapChange));
         if (isCapChange) {
             saveCoordinates(lon, lat);
-
         }
     }
     public void getIntent(Intent intent) {
@@ -56,20 +56,23 @@ public class MyReciever extends BroadcastReceiver {
         this.lon = intent.getStringExtra("lon");
         this.accuracy = intent.getStringExtra("accuracy");
         this.bearing = intent.getStringExtra("bearing");
-        //this.float_bearing = intent.getFloatExtra("float_bearing",0.0f);
-        //changeCap();
+        this.float_bearing = intent.getFloatExtra("float_bearing",0.0f);
+
     }
     
     // Methode implementée par BroadcastReciever
     public void onReceive(Context context, Intent intent) {
-        Log.e("MyReceiver_Location Changed", String.valueOf(lat));
+
+        getIntent(intent);
+        changeCap();
+        Log.e("MyReceiver_cap Changed", String.valueOf(float_bearing));
         this.recIsOn = MainActivity.recIsOn;
 
         // Si le bouton de MAinActivity en sur enregistrement
         // on ecrit les coordonnées sur le fichier
         if (recIsOn == true) {
             isFileOk();
-            getIntent(intent);
+
 
             // Si le fichier est sauvegarder on enregistre les
             // coordonnées
@@ -83,6 +86,7 @@ public class MyReciever extends BroadcastReceiver {
                 mainActivity.setLat(lat, lon, accuracy, bearing);
             }
         } else {
+
             return;
         }
     }
