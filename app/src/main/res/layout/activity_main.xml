@@ -37,7 +37,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_weight="0.33"
+        android:layout_weight="0.10"
         android:orientation="horizontal">
 
 
@@ -68,47 +68,51 @@
         android:id="@+id/radio_group"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.26"
+        android:layout_weight="0.50"
         android:orientation="horizontal">
 
 
         <RadioButton
             android:id="@+id/radio_hlp"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
+            android:layout_gravity="center"
             android:layout_weight="1"
             android:maxLines="1"
+            android:gravity="left"
             android:padding="@dimen/padding_radio"
             android:text="@string/haut_le_pieds"
             android:textSize="@dimen/h2" />
 
         <RadioButton
             android:id="@+id/radio_ulat"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
+            android:layout_gravity="center"
             android:layout_weight="1"
+            android:gravity="left"
             android:padding="@dimen/padding_radio"
             android:text="@string/uni_lateral_droit"
             android:textSize="@dimen/h2" />
 
         <RadioButton
             android:id="@+id/radio_biLat"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-
+            android:layout_gravity="center"
+            android:gravity="left"
+            android:padding="@dimen/padding_radio"
             android:layout_weight="1"
             android:text="@string/bi_lateral"
             android:textSize="@dimen/h2" />
 
         <RadioButton
             android:id="@+id/radio_m_a"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
+            android:layout_gravity="center"
             android:layout_weight="1"
+            android:gravity="left"
             android:padding="@dimen/padding_radio"
             android:text="@string/marche_arriere"
             android:textSize="@dimen/h2" />
@@ -166,7 +170,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:layout_weight="0.50"
+        android:layout_weight="0.25"
         android:orientation="horizontal">
 
         <Button

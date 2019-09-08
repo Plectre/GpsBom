@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SERVICE BOM</string>
+    <string name="app_name">Service Bom</string>
     <string name="by_plectre">by Plectre</string>
     <string name="version">2.2.2</string>
     <string name="circuit">Type de circuit</string>

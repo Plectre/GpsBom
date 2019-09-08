@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.annotation.IdRes;
@@ -46,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
     public static String typeCollectte = "HLP";
     private Animation fadeAnim;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -69,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
         btn_noir = (Button) findViewById(R.id.btn_point_noir);
 
         fadeAnim = AnimationUtils.loadAnimation(MainActivity.this, R.anim.anim);
+
         AfficheGpsStatus(gpsStatus);
         onRadioGroupChange();
 
@@ -96,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 pointNoir();
-                Toast.makeText(MainActivity.this, "Point noir enregistré", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Point enregistré", Toast.LENGTH_LONG).show();
                 vibrator(100);
             }
         });
@@ -137,25 +138,25 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.radio_biLat:
                         RadioButton rbt_bilat = findViewById(R.id.radio_biLat);
                         typeCollectte = String.valueOf(rbt_bilat.getText());
-                        affichageTypeCollecte(typeCollectte);
+                        affichageTypeCollecte(typeCollectte, Color.RED);
                         ftypeCollectte(typeCollectte);
                         break;
                     case R.id.radio_hlp:
                         RadioButton rbt_hlp = findViewById(R.id.radio_hlp);
                         typeCollectte = String.valueOf(rbt_hlp.getText());
-                        affichageTypeCollecte(typeCollectte);
+                        affichageTypeCollecte(typeCollectte,Color.rgb(56, 134, 49));
                         ftypeCollectte(typeCollectte);
                         break;
                     case R.id.radio_m_a:
                         RadioButton rbt_ma = findViewById(R.id.radio_m_a);
                         typeCollectte = String.valueOf(rbt_ma.getText());
-                        affichageTypeCollecte(typeCollectte);
+                        affichageTypeCollecte(typeCollectte, Color.BLACK);
                         ftypeCollectte(typeCollectte);
                         break;
                     case R.id.radio_ulat:
                         RadioButton rbt_ulat = findViewById(R.id.radio_ulat);
                         typeCollectte = String.valueOf(rbt_ulat.getText());
-                        affichageTypeCollecte(typeCollectte);
+                        affichageTypeCollecte(typeCollectte, Color.BLUE);
                         ftypeCollectte(typeCollectte);
                         break;
                     default:
@@ -242,8 +243,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void affichageTypeCollecte(String typeCollecte) {
-        txt_typeDeCollecte.setTextColor(Color.rgb(0, 0, 0));
+    public void affichageTypeCollecte(String typeCollecte, int color) {
+        txt_typeDeCollecte.setTextColor(color);
         txt_typeDeCollecte.setText(typeCollecte);
     }
     // Alert box fin de collecte
