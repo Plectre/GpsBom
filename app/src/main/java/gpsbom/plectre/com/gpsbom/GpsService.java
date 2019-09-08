@@ -14,6 +14,7 @@ import android.os.IBinder;
 import android.os.Vibrator;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -79,14 +80,13 @@ public class GpsService extends Service {
         @Override
         public void onLocationChanged(Location location) {
 
-
             // Test du seekbar des step de plot de coordonnées
             if (vitesseDeCollecte <= 0) {
                 vitesseDeCollecte = 30; // Valeur minimum de la seekBar
             }
 
             //Log.e("LocationUpdate", String.valueOf(vitesseDeCollecte));
-            float newStep = oldStep + vitesseDeCollecte;
+            float newStep = oldStep + (vitesseDeCollecte/2);
             currentStep += 1;
             //Log.e("currentStep", String.valueOf(currentStep));
             //Log.e("newStep", String.valueOf(newStep));
@@ -124,19 +124,21 @@ public class GpsService extends Service {
              * txt_lat et txt_lon
              */
 
-            Intent intent = new Intent("broadcast_coor");
-
+            Intent intent = new Intent(getApplicationContext(), MyReciever.class);
+            intent.setAction("com.bom.service");
+            //intent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
             String str_lat = String.valueOf(latitude);
             String str_lon = String.valueOf(longitude);
             String str_accuracy = String.valueOf(intAccuracy);
             // Appel methode pour formatage du cap pour affichage...
             str_bearing = formatBearing(bearing);
-            intent.putExtra("lat", str_lat);
-            intent.putExtra("lon", str_lon);
-            intent.putExtra("accuracy", str_accuracy);
-            intent.putExtra("bearing", str_bearing);
-            intent.putExtra("float_bearing", bearing);
-
+            intent.putExtra("lat", str_lat);            // Latitude
+            intent.putExtra("lon", str_lon);            // longitude
+            intent.putExtra("accuracy", str_accuracy);  // Précision
+            intent.putExtra("bearing", str_bearing);    // Cap pour affichage
+            //intent.putExtra("float_bearing", bearing);  // Cap
+            Log.e("GpsService_Location Changed", str_lat);
+            Log.e("GpsService_precision", str_accuracy);
             sendBroadcast(intent);
         }
 
@@ -194,7 +196,6 @@ public class GpsService extends Service {
         // On se desabonne du service GPS
         locationMgr.removeUpdates(onLocationChange);
     }
-
     // Methode appellée au demarrage du service
     public int onStartCommand(Intent intent, int flags, int startId) {
         // Récupération des données envoyées par launcherActivity

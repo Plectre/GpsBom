@@ -135,25 +135,25 @@ public class MainActivity extends AppCompatActivity {
                 switch (checkedId) {
 
                     case R.id.radio_biLat:
-                        RadioButton rbt_bilat = (RadioButton) findViewById(R.id.radio_biLat);
+                        RadioButton rbt_bilat = findViewById(R.id.radio_biLat);
                         typeCollectte = String.valueOf(rbt_bilat.getText());
                         affichageTypeCollecte(typeCollectte);
                         ftypeCollectte(typeCollectte);
                         break;
                     case R.id.radio_hlp:
-                        RadioButton rbt_hlp = (RadioButton) findViewById(R.id.radio_hlp);
+                        RadioButton rbt_hlp = findViewById(R.id.radio_hlp);
                         typeCollectte = String.valueOf(rbt_hlp.getText());
                         affichageTypeCollecte(typeCollectte);
                         ftypeCollectte(typeCollectte);
                         break;
                     case R.id.radio_m_a:
-                        RadioButton rbt_ma = (RadioButton) findViewById(R.id.radio_m_a);
+                        RadioButton rbt_ma = findViewById(R.id.radio_m_a);
                         typeCollectte = String.valueOf(rbt_ma.getText());
                         affichageTypeCollecte(typeCollectte);
                         ftypeCollectte(typeCollectte);
                         break;
                     case R.id.radio_ulat:
-                        RadioButton rbt_ulat = (RadioButton) findViewById(R.id.radio_ulat);
+                        RadioButton rbt_ulat = findViewById(R.id.radio_ulat);
                         typeCollectte = String.valueOf(rbt_ulat.getText());
                         affichageTypeCollecte(typeCollectte);
                         ftypeCollectte(typeCollectte);

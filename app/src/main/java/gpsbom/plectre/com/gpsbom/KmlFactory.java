@@ -127,7 +127,6 @@ public class KmlFactory extends Activity {
                 + "</Placemark>";
         saveKmlPoints(blackPoint);
     }
-
     public void footerPoint() {
 
         String footer = "</Document>" + NEW_LINE
